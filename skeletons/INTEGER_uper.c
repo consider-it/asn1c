@@ -66,7 +66,7 @@ INTEGER_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
                 ASN_DEBUG("Got value %lu + low %ld",
                     uvalue, ct->lower_bound);
                 uvalue += ct->lower_bound;
-                if(asn_ulong2INTEGER(st, uvalue))
+                if(asn_umax2INTEGER(st, uvalue))
                     ASN__DECODE_FAILED;
             } else {
                 uintmax_t uvalue = 0;
