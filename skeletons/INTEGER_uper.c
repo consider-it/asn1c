@@ -61,20 +61,20 @@ INTEGER_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
             if(specs && specs->field_unsigned) {
                 uintmax_t uvalue = 0;
                 if(uper_get_constrained_whole_number(pd,
-                &uvalue, ct->range_bits))
-                ASN__DECODE_STARVED;
-            ASN_DEBUG("Got value %lu + low %ld",
-                uvalue, ct->lower_bound);
-            uvalue += ct->lower_bound;
-            if(asn_ulong2INTEGER(st, uvalue))
-                ASN__DECODE_FAILED;
-        } else {
-            uintmax_t uvalue = 0;
-            intmax_t svalue;
-            if(uper_get_constrained_whole_number(pd,
-                &uvalue, ct->range_bits))
-                ASN__DECODE_STARVED;
-            ASN_DEBUG("Got value %lu + low %ld",
+                    &uvalue, ct->range_bits))
+                    ASN__DECODE_STARVED;
+                ASN_DEBUG("Got value %lu + low %ld",
+                    uvalue, ct->lower_bound);
+                uvalue += ct->lower_bound;
+                if(asn_ulong2INTEGER(st, uvalue))
+                    ASN__DECODE_FAILED;
+            } else {
+                uintmax_t uvalue = 0;
+                intmax_t svalue;
+                if(uper_get_constrained_whole_number(pd,
+                    &uvalue, ct->range_bits))
+                    ASN__DECODE_STARVED;
+                ASN_DEBUG("Got value %lu + low %ld",
                 uvalue, ct->lower_bound);
                 if(per_imax_range_unrebase(uvalue, ct->lower_bound,
                                            ct->upper_bound, &svalue)
