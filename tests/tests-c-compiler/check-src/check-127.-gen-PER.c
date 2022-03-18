@@ -16,7 +16,7 @@ verify(int testNo, T_t *ti) {
 	unsigned char buf[16];
 	T_t *to = 0;
 
-	fprintf(stderr, "%d IN: { %ld, %ld, %lu, %lu }\n", testNo,
+	fprintf(stderr, "%d IN: { %"PRIi64", %"PRIi64", %"PRIu64", %"PRIu64" }\n", testNo,
 		ti->small32range, ti->full32range,
 		ti->unsigned32, ti->unsplit32);
 
@@ -29,7 +29,7 @@ verify(int testNo, T_t *ti) {
 	fprintf(stderr, "%d ENC: %2x%2x%2x%2x %2x%2x%2x%2x\n", testNo,
 		buf[0], buf[1], buf[2], buf[3],
 		buf[4], buf[5], buf[6], buf[7]);
-	fprintf(stderr, "%d OUT: { %ld, %ld, %lu, %lu } vs { %ld, %ld, %lu, %lu }\n",
+	fprintf(stderr, "%d OUT: { %"PRIi64", %"PRIi64", %"PRIu64", %"PRIu64" } vs { %"PRIi64", %"PRIi64", %"PRIu64", %"PRIu64" }\n",
 		testNo,
 		ti->small32range, ti->full32range,
 			ti->unsigned32, ti->unsplit32,

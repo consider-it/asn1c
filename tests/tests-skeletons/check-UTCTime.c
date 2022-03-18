@@ -15,9 +15,9 @@ check(char *time_str, time_t sample, int as_gmt) {
 	gt.size = strlen(time_str);
 
 	tloc = asn_UT2time(&gt, &tm, as_gmt);
-	printf("[%s] -> %ld == %ld\n", time_str, (long)tloc, (long)sample);
+	printf("[%s] -> %"PRIi64" == %"PRIi64"\n", time_str, (int64_t)tloc, (int64_t)sample);
 	if(tloc != -1)
-	printf("\t%d-%d-%dT%02d:%02d:%02d %ld\n",
+	printf("\t%d-%d-%dT%02d:%02d:%02d %"PRIi64"\n",
 		tm.tm_year + 1900,
 		tm.tm_mon + 1,
 		tm.tm_mday,

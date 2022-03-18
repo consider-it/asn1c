@@ -2513,8 +2513,8 @@ do_action:	/* This label is used only to access EOF actions. */
 			if ( yy_act == 0 )
 				fprintf( stderr, "--scanner backing up\n" );
 			else if ( yy_act < 142 )
-				fprintf( stderr, "--accepting rule at line %ld (\"%s\")\n",
-				         (long)yy_rule_linenum[yy_act], asn1p_text );
+				fprintf( stderr, "--accepting rule at line %"PRIi64" (\"%s\")\n",
+				         (int64_t)yy_rule_linenum[yy_act], asn1p_text );
 			else if ( yy_act == 142 )
 				fprintf( stderr, "--accepting default rule (\"%s\")\n",
 				         asn1p_text );

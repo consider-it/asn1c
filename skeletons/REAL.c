@@ -113,7 +113,7 @@ typedef enum specialRealValue {
 static struct specialRealValue_s {
 	char *string;
 	size_t length;
-	long dv;
+	int64_t dv;
 } specialRealValue[] = {
 #define	SRV_SET(foo, val)	{ foo, sizeof(foo) - 1, val }
 	SRV_SET("<NOT-A-NUMBER/>", 0),

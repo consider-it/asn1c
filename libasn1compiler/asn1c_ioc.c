@@ -127,10 +127,10 @@ emit_ioc_value(arg_t *arg, struct asn1p_ioc_cell_s *cell) {
             case FL_PRESUMED:
             case FL_FITS_SIGNED:
                 primitive_representation = 1;
-                prim_type = "long";
+                prim_type = "int64_t";
                 break;
             case FL_FITS_UNSIGN:
-                prim_type = "unsigned long";
+                prim_type = "uint64_t";
                 primitive_representation = 1;
                 break;
             }

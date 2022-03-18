@@ -283,16 +283,16 @@ INTEGER_map_enum2value(const asn_INTEGER_specifics_t *specs, const char *lstart,
 
 static int
 INTEGER__compar_value2enum(const void *kp, const void *am) {
-	long a = *(const long *)kp;
+	int64_t a = *(const int64_t *)kp;
 	const asn_INTEGER_enum_map_t *el = (const asn_INTEGER_enum_map_t *)am;
-	long b = el->nat_value;
+	int64_t b = el->nat_value;
 	if(a < b) return -1;
 	else if(a == b) return 0;
 	else return 1;
 }
 
 const asn_INTEGER_enum_map_t *
-INTEGER_map_value2enum(const asn_INTEGER_specifics_t *specs, long value) {
+INTEGER_map_value2enum(const asn_INTEGER_specifics_t *specs, int64_t value) {
 	int count = specs ? specs->map_count : 0;
 	if(!count) return 0;
 	return (asn_INTEGER_enum_map_t *)bsearch(&value, specs->value2enum,
@@ -343,8 +343,8 @@ INTEGER__xer_body_decode(const asn_TYPE_descriptor_t *td, void *sptr,
 	const char *dec_value_end = 0;
 
 	if(chunk_size)
-		ASN_DEBUG("INTEGER body %ld 0x%2x..0x%2x",
-			(long)chunk_size, *lstart, lstop[-1]);
+		ASN_DEBUG("INTEGER body %"PRIi64" 0x%2x..0x%2x",
+			(int64_t)chunk_size, *lstart, lstop[-1]);
 
 	if(INTEGER_st_prealloc(st, (chunk_size/3) + 1))
 		return XPBD_SYSTEM_FAILURE;
@@ -424,7 +424,7 @@ INTEGER__xer_body_decode(const asn_TYPE_descriptor_t *td, void *sptr,
 					(const asn_INTEGER_specifics_t *)
 					td->specifics, lstart, lstop);
 				if(el) {
-					ASN_DEBUG("Found \"%s\" => %ld",
+					ASN_DEBUG("Found \"%s\" => %"PRIi64"",
 						el->enum_name, el->nat_value);
 					dec_value = el->nat_value;
 					state = ST_END_ENUM;
@@ -450,7 +450,7 @@ INTEGER__xer_body_decode(const asn_TYPE_descriptor_t *td, void *sptr,
 				lp = lstart - 1;
 				continue;
 			} else {
-				ASN_DEBUG("state %d at %ld", state, (long)(lp - lstart));
+				ASN_DEBUG("state %d at %"PRIi64"", state, (int64_t)(lp - lstart));
 				break;
 			}
 		/* [A-Fa-f] */
@@ -484,8 +484,8 @@ INTEGER__xer_body_decode(const asn_TYPE_descriptor_t *td, void *sptr,
 		}
 
 		/* Found extra non-numeric stuff */
-		ASN_DEBUG("INTEGER :: Found non-numeric 0x%2x at %ld",
-			lv, (long)(lp - lstart));
+		ASN_DEBUG("INTEGER :: Found non-numeric 0x%2x at %"PRIi64"",
+			lv, (int64_t)(lp - lstart));
 		state = ST_UNEXPECTED;
 		break;
 	}
@@ -501,14 +501,14 @@ INTEGER__xer_body_decode(const asn_TYPE_descriptor_t *td, void *sptr,
 		/* The last symbol encountered was a digit. */
         switch(asn_strtoimax_lim(dec_value_start, &dec_value_end, &dec_value)) {
         case ASN_STRTOX_OK:
-            if(dec_value >= LONG_MIN && dec_value <= LONG_MAX) {
+            if(dec_value >= INT64_MIN && dec_value <= INT64_MAX) {
                 break;
             } else {
                 /*
-                 * We model INTEGER on long for XER,
+                 * We model INTEGER on int64_t for XER,
                  * to avoid rewriting all the tests at once.
                  */
-                ASN_DEBUG("INTEGER exceeds long range");
+                ASN_DEBUG("INTEGER exceeds int64_t range");
             }
             /* Fall through */
         case ASN_STRTOX_ERROR_RANGE:
@@ -628,26 +628,26 @@ INTEGER_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
 		/* #11.5.6 */
 		ASN_DEBUG("Integer with range %d bits", ct->range_bits);
 		if(ct->range_bits >= 0) {
-			if((size_t)ct->range_bits > 8 * sizeof(unsigned long))
+			if((size_t)ct->range_bits > 8 * sizeof(uint64_t))
 				ASN__DECODE_FAILED;
 
 			if(specs && specs->field_unsigned) {
-				unsigned long uvalue = 0;
+				uint64_t uvalue = 0;
 				if(uper_get_constrained_whole_number(pd,
 					&uvalue, ct->range_bits))
 					ASN__DECODE_STARVED;
-				ASN_DEBUG("Got value %lu + low %ld",
+				ASN_DEBUG("Got value %"PRIu64" + low %"PRIi64"",
 					uvalue, ct->lower_bound);
 				uvalue += ct->lower_bound;
 				if(asn_ulong2INTEGER(st, uvalue))
 					ASN__DECODE_FAILED;
 			} else {
-				unsigned long uvalue = 0;
-				long svalue;
+				uint64_t uvalue = 0;
+				int64_t svalue;
 				if(uper_get_constrained_whole_number(pd,
 					&uvalue, ct->range_bits))
 					ASN__DECODE_STARVED;
-				ASN_DEBUG("Got value %lu + low %ld",
+				ASN_DEBUG("Got value %"PRIu64" + low %"PRIi64"",
 					uvalue, ct->lower_bound);
                 if(per_long_range_unrebase(uvalue, ct->lower_bound,
                                            ct->upper_bound, &svalue)
@@ -686,7 +686,7 @@ INTEGER_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
 		/*
 		 * TODO: replace by in-place arithmetics.
 		 */
-		long value = 0;
+		int64_t value = 0;
 		if(asn_INTEGER2long(st, &value))
 			ASN__DECODE_FAILED;
 		if(asn_imax2INTEGER(st, value + ct->lower_bound))
@@ -707,7 +707,7 @@ INTEGER_encode_uper(const asn_TYPE_descriptor_t *td,
 	const uint8_t *buf;
 	const uint8_t *end;
 	const asn_per_constraint_t *ct;
-	long value = 0;
+	int64_t value = 0;
 
 	if(!st || st->size == 0) ASN__ENCODE_FAILED;
 
@@ -719,19 +719,19 @@ INTEGER_encode_uper(const asn_TYPE_descriptor_t *td,
 	if(ct) {
 		int inext = 0;
 		if(specs && specs->field_unsigned) {
-			unsigned long uval;
+			uint64_t uval;
 			if(asn_INTEGER2ulong(st, &uval))
 				ASN__ENCODE_FAILED;
 			/* Check proper range */
 			if(ct->flags & APC_SEMI_CONSTRAINED) {
-				if(uval < (unsigned long)ct->lower_bound)
+				if(uval < (uint64_t)ct->lower_bound)
 					inext = 1;
 			} else if(ct->range_bits >= 0) {
-				if(uval < (unsigned long)ct->lower_bound
-				|| uval > (unsigned long)ct->upper_bound)
+				if(uval < (uint64_t)ct->lower_bound
+				|| uval > (uint64_t)ct->upper_bound)
 					inext = 1;
 			}
-			ASN_DEBUG("Value %lu (%02x/%" ASN_PRI_SIZE ") lb %lu ub %lu %s",
+			ASN_DEBUG("Value %"PRIu64" (%02x/%" ASN_PRI_SIZE ") lb %"PRIu64" ub %"PRIu64" %s",
 				uval, st->buf[0], st->size,
 				ct->lower_bound, ct->upper_bound,
 				inext ? "ext" : "fix");
@@ -748,7 +748,7 @@ INTEGER_encode_uper(const asn_TYPE_descriptor_t *td,
 				|| value > ct->upper_bound)
 					inext = 1;
 			}
-			ASN_DEBUG("Value %ld (%02x/%" ASN_PRI_SIZE ") lb %ld ub %ld %s",
+			ASN_DEBUG("Value %"PRIi64" (%02x/%" ASN_PRI_SIZE ") lb %"PRIi64" ub %"PRIi64" %s",
 				value, st->buf[0], st->size,
 				ct->lower_bound, ct->upper_bound,
 				inext ? "ext" : "fix");
@@ -765,9 +765,9 @@ INTEGER_encode_uper(const asn_TYPE_descriptor_t *td,
 
 	/* X.691-11/2008, #13.2.2, test if constrained whole number */
 	if(ct && ct->range_bits >= 0) {
-        unsigned long v;
+        uint64_t v;
 		/* #11.5.6 -> #11.3 */
-		ASN_DEBUG("Encoding integer %ld (%lu) with range %d bits",
+		ASN_DEBUG("Encoding integer %"PRIi64" (%"PRIu64") with range %d bits",
 			value, value - ct->lower_bound, ct->range_bits);
         if(per_long_range_rebase(value, ct->lower_bound, ct->upper_bound, &v)) {
             ASN__ENCODE_FAILED;
@@ -778,7 +778,7 @@ INTEGER_encode_uper(const asn_TYPE_descriptor_t *td,
 	}
 
 	if(ct && ct->lower_bound) {
-		ASN_DEBUG("Adjust lower bound to %ld", ct->lower_bound);
+		ASN_DEBUG("Adjust lower bound to %"PRIi64"", ct->lower_bound);
 		/* TODO: adjust lower bound */
 		ASN__ENCODE_FAILED;
 	}
@@ -943,7 +943,7 @@ asn_imax2INTEGER(INTEGER_t *st, intmax_t value) {
 		return -1;
 	}
 
-	buf = (uint8_t *)(long *)MALLOC(sizeof(value));
+	buf = (uint8_t *)(int64_t *)MALLOC(sizeof(value));
 	if(!buf) return -1;
 
 	if(*(char *)&littleEndian) {
@@ -985,10 +985,10 @@ asn_imax2INTEGER(INTEGER_t *st, intmax_t value) {
 }
 
 int
-asn_INTEGER2long(const INTEGER_t *iptr, long *l) {
+asn_INTEGER2long(const INTEGER_t *iptr, int64_t *l) {
     intmax_t v;
     if(asn_INTEGER2imax(iptr, &v) == 0) {
-        if(v < LONG_MIN || v > LONG_MAX) {
+        if(v < INT64_MIN || v > INT64_MAX) {
             errno = ERANGE;
             return -1;
         }
@@ -1000,7 +1000,7 @@ asn_INTEGER2long(const INTEGER_t *iptr, long *l) {
 }
 
 int
-asn_INTEGER2ulong(const INTEGER_t *iptr, unsigned long *l) {
+asn_INTEGER2ulong(const INTEGER_t *iptr, uint64_t *l) {
     uintmax_t v;
     if(asn_INTEGER2umax(iptr, &v) == 0) {
         if(v > ULONG_MAX) {
@@ -1015,12 +1015,12 @@ asn_INTEGER2ulong(const INTEGER_t *iptr, unsigned long *l) {
 }
 
 int
-asn_long2INTEGER(INTEGER_t *st, long value) {
+asn_long2INTEGER(INTEGER_t *st, int64_t value) {
     return asn_imax2INTEGER(st, value);
 }
 
 int
-asn_ulong2INTEGER(INTEGER_t *st, unsigned long value) {
+asn_ulong2INTEGER(INTEGER_t *st, uint64_t value) {
     return asn_imax2INTEGER(st, value);
 }
 
@@ -1167,7 +1167,7 @@ asn_strtoumax_lim(const char *str, const char **end, uintmax_t *uintp) {
 }
 
 enum asn_strtox_result_e
-asn_strtol_lim(const char *str, const char **end, long *lp) {
+asn_strtol_lim(const char *str, const char **end, int64_t *lp) {
     intmax_t value;
     switch(asn_strtoimax_lim(str, end, &value)) {
     case ASN_STRTOX_ERROR_RANGE:
@@ -1177,14 +1177,14 @@ asn_strtol_lim(const char *str, const char **end, long *lp) {
     case ASN_STRTOX_EXPECT_MORE:
         return ASN_STRTOX_EXPECT_MORE;
     case ASN_STRTOX_OK:
-        if(value >= LONG_MIN && value <= LONG_MAX) {
+        if(value >= INT64_MIN && value <= INT64_MAX) {
             *lp = value;
             return ASN_STRTOX_OK;
         } else {
             return ASN_STRTOX_ERROR_RANGE;
         }
     case ASN_STRTOX_EXTRA_DATA:
-        if(value >= LONG_MIN && value <= LONG_MAX) {
+        if(value >= INT64_MIN && value <= INT64_MAX) {
             *lp = value;
             return ASN_STRTOX_EXTRA_DATA;
         } else {
@@ -1197,7 +1197,7 @@ asn_strtol_lim(const char *str, const char **end, long *lp) {
 }
 
 enum asn_strtox_result_e
-asn_strtoul_lim(const char *str, const char **end, unsigned long *ulp) {
+asn_strtoul_lim(const char *str, const char **end, uint64_t *ulp) {
     uintmax_t value;
     switch(asn_strtoumax_lim(str, end, &value)) {
     case ASN_STRTOX_ERROR_RANGE:
@@ -1313,7 +1313,7 @@ INTEGER_random_fill(const asn_TYPE_descriptor_t *td, void **sptr,
     } else {
         const asn_per_constraints_t *ct;
 
-        static const long variants[] = {
+        static const int32_t variants[] = {
             -65536, -65535, -65534, -32769, -32768, -32767, -16385, -16384,
             -16383, -257,   -256,   -255,   -254,   -129,   -128,   -127,
             -126,   -1,     0,      1,      126,    127,    128,    129,

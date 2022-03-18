@@ -5,7 +5,7 @@
 
 /*** <<< TYPE-DECLS [OK-Integer1] >>> ***/
 
-typedef long	 OK_Integer1_t;
+typedef int64_t	 OK_Integer1_t;
 
 /*** <<< FUNC-DECLS [OK-Integer1] >>> ***/
 
@@ -71,7 +71,7 @@ asn_TYPE_descriptor_t asn_DEF_OK_Integer1 = {
 
 /*** <<< TYPE-DECLS [OK-Integer2] >>> ***/
 
-typedef long	 OK_Integer2_t;
+typedef int64_t	 OK_Integer2_t;
 
 /*** <<< FUNC-DECLS [OK-Integer2] >>> ***/
 
@@ -137,7 +137,7 @@ asn_TYPE_descriptor_t asn_DEF_OK_Integer2 = {
 
 /*** <<< TYPE-DECLS [OK-Integer3] >>> ***/
 
-typedef long	 OK_Integer3_t;
+typedef int64_t	 OK_Integer3_t;
 
 /*** <<< FUNC-DECLS [OK-Integer3] >>> ***/
 
@@ -203,7 +203,7 @@ asn_TYPE_descriptor_t asn_DEF_OK_Integer3 = {
 
 /*** <<< TYPE-DECLS [OK-Integer4] >>> ***/
 
-typedef long	 OK_Integer4_t;
+typedef int64_t	 OK_Integer4_t;
 
 /*** <<< FUNC-DECLS [OK-Integer4] >>> ***/
 
@@ -269,7 +269,7 @@ asn_TYPE_descriptor_t asn_DEF_OK_Integer4 = {
 
 /*** <<< TYPE-DECLS [NO-Integer5] >>> ***/
 
-typedef long	 NO_Integer5_t;
+typedef int64_t	 NO_Integer5_t;
 
 /*** <<< FUNC-DECLS [NO-Integer5] >>> ***/
 

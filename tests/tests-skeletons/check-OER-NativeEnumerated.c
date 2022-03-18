@@ -8,13 +8,13 @@
 #define CHECK_ROUNDTRIP(a) check_roundtrip(__LINE__, a);
 
 static void
-check_decode(int lineno, enum asn_dec_rval_code_e code, long control, const char *buf, size_t size) {
+check_decode(int lineno, enum asn_dec_rval_code_e code, int64_t control, const char *buf, size_t size) {
     static char *code_s[] = { "RC_OK", "RC_WMORE", "RC_FAIL", "<error>" };
 
-    fprintf(stderr, "\n%d: OER decode (control %ld)\n", lineno, control);
+    fprintf(stderr, "\n%d: OER decode (control %"PRIi64")\n", lineno, control);
 
-    long value;
-    long *value_ptr = &value;
+    int64_t value;
+    int64_t *value_ptr = &value;
     asn_dec_rval_t ret;
 
     fprintf(stderr, "%d: buf[%zu]={%d, %d, ...}\n", lineno, size,
@@ -25,7 +25,7 @@ check_decode(int lineno, enum asn_dec_rval_code_e code, long control, const char
                                       (void **)&value_ptr, buf, size);
     if(ret.code != RC_OK) {
         /* Basic OER decode does not work */
-        fprintf(stderr, "%d: Failed oer_decode(ctl=%ld, size=%zu)\n",
+        fprintf(stderr, "%d: Failed oer_decode(ctl=%"PRIi64", size=%zu)\n",
                 lineno, control, size);
         if(ret.code == code) {
             fprintf(stderr, "  (That was expected)\n");
@@ -38,17 +38,17 @@ check_decode(int lineno, enum asn_dec_rval_code_e code, long control, const char
             assert(ret.code == code);
         }
     } else {
-        long outcome = value;
+        int64_t outcome = value;
         if(outcome != control) {
             /* Decoded value is wrong */
             fprintf(stderr,
-                    "%d: Decode result %ld is not expected %ld\n",
+                    "%d: Decode result %"PRIi64" is not expected %"PRIi64"\n",
                     lineno, outcome, control);
             assert(outcome == control);
         }
     }
 
-    fprintf(stderr, "%d: Decode result %ld\n", lineno, control);
+    fprintf(stderr, "%d: Decode result %"PRIi64"\n", lineno, control);
 }
 
 static void
@@ -65,17 +65,17 @@ dump_data(int lineno, const uint8_t *buf, size_t size) {
 }
 
 static void
-check_roundtrip(int lineno, long control) {
+check_roundtrip(int lineno, int64_t control) {
     uint8_t tmpbuf[32];
     size_t tmpbuf_size;
     asn_enc_rval_t er;
     asn_dec_rval_t ret;
 
-    fprintf(stderr, "\n%d: OER round-trip value %ld\n", lineno, control);
+    fprintf(stderr, "\n%d: OER round-trip value %"PRIi64"\n", lineno, control);
 
-    long value_out = control;
-    long value_in = -42;
-    long *value_in_ptr = &value_in;
+    int64_t value_out = control;
+    int64_t value_in = -42;
+    int64_t *value_in_ptr = &value_in;
 
     er = oer_encode_to_buffer(&asn_DEF_NativeEnumerated, NULL,
                               &value_out, tmpbuf, sizeof(tmpbuf));
@@ -93,21 +93,21 @@ check_roundtrip(int lineno, long control) {
                                                    tmpbuf, tmpbuf_size);
     if(ret.code != RC_OK) {
         /* Basic OER decode does not work */
-        fprintf(stderr, "%d: Failed oer_decode(value=%ld, size=%zu)\n",
+        fprintf(stderr, "%d: Failed oer_decode(value=%"PRIi64", size=%zu)\n",
                 lineno, control, tmpbuf_size);
         assert(ret.code == 0);
     } else {
-        long outcome = value_in;
+        int64_t outcome = value_in;
         if(outcome != control) {
             /* Decoded value is wrong */
             fprintf(stderr,
-                    "%d: Decode result %ld is not expected %ld\n",
+                    "%d: Decode result %"PRIi64" is not expected %"PRIi64"\n",
                     lineno, outcome, control);
             assert(outcome == control);
         }
     }
 
-    fprintf(stderr, "%d: Decode result %ld\n", lineno, control);
+    fprintf(stderr, "%d: Decode result %"PRIi64"\n", lineno, control);
 }
 
 int
@@ -158,8 +158,8 @@ main() {
     CHECK_ROUNDTRIP(65536);
     CHECK_ROUNDTRIP(32000);
 
-    for(size_t i = 0; i < 8 * sizeof(long) - 1; i++) {
-        long value = (long)1 << i;
+    for(size_t i = 0; i < 8 * sizeof(int64_t) - 1; i++) {
+        int64_t value = (int64_t)1 << i;
         CHECK_ROUNDTRIP(value);
         value = -value;
         CHECK_ROUNDTRIP(value);

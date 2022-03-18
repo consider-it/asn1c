@@ -85,11 +85,11 @@ typedef enum value_PR {
 /*** <<< TYPE-DECLS [SpecializedContent] >>> ***/
 
 typedef struct SpecializedContent_42P0 {
-	long	 id;
+	int64_t	 id;
 	struct value {
 		value_PR present;
 		union SpecializedContent_42P0__value_u {
-			long	 INTEGER;
+			int64_t	 INTEGER;
 			BOOLEAN_t	 BOOLEAN;
 		;
 			OCTET_STRING_t	 OCTET_STRING;
@@ -111,10 +111,10 @@ extern asn_TYPE_member_t asn_MBR_SpecializedContent_42P0_1[2];
 
 /*** <<< IOC-TABLES [SpecializedContent] >>> ***/
 
-static const long asn_VAL_1_1 = 1;
-static const long asn_VAL_2_2 = 2;
-static const long asn_VAL_3_2 = 2;
-static const long asn_VAL_4_3 = 3;
+static const int64_t asn_VAL_1_1 = 1;
+static const int64_t asn_VAL_2_2 = 2;
+static const int64_t asn_VAL_3_2 = 2;
+static const int64_t asn_VAL_4_3 = 3;
 static const asn_ioc_cell_t asn_IOS_TotalRegionExtension_1_rows[] = {
 	{ "&id", aioc__value, &asn_DEF_NativeInteger, &asn_VAL_1_1 },
 	{ "&Type", ,
@@ -157,7 +157,7 @@ select_SpecializedContent_42P0_value_type(const asn_TYPE_descriptor_t *parent_ty
 	size_t constraining_column = 0; /* &id */
 	size_t for_column = 1; /* &Type */
 	size_t row;
-	const long *constraining_value = (const long *)((const char *)parent_sptr + offsetof(struct SpecializedContent_42P0, id));
+	const int64_t *constraining_value = (const int64_t *)((const char *)parent_sptr + offsetof(struct SpecializedContent_42P0, id));
 	
 	for(row=0; row < itable->rows_count; row++) {
 	    const asn_ioc_cell_t *constraining_cell = &itable->rows[row * itable->columns_count + constraining_column];

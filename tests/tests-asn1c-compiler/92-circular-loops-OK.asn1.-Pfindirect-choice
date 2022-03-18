@@ -584,7 +584,7 @@ struct Sequence;
 /*** <<< FWD-DEFS [Set] >>> ***/
 
 typedef struct Member {
-	long	 Int;
+	int64_t	 Int;
 	struct Set	*set;
 	struct Sequence	*seq;
 	struct Set	*set2	/* OPTIONAL */;
@@ -751,13 +751,13 @@ struct Set;
 /*** <<< TYPE-DECLS [Sequence] >>> ***/
 
 typedef struct Sequence {
-	long	 a;
+	int64_t	 a;
 	struct Sequence	*seq	/* OPTIONAL */;
 	/*
 	 * This type is extensible,
 	 * possible extensions are below.
 	 */
-	long	*b;
+	int64_t	*b;
 	struct Set	*set	/* OPTIONAL */;
 	
 	/* Context for parsing across buffer boundaries */

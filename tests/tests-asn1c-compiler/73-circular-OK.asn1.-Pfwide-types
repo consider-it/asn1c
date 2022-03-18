@@ -448,7 +448,7 @@ static int asn_DFL_3_cmp_7(const void *sptr) {
 	}
 	
 	/* Test default value 7 */
-	long value;
+	int64_t value;
 	if(asn_INTEGER2long(st, &value))
 		return -1;
 	return (value != 7);

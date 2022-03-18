@@ -47,8 +47,8 @@ extern asn_TYPE_descriptor_t asn_DEF_Frame;
 
 /*** <<< IOC-TABLES [Frame] >>> ***/
 
-static const long asn_VAL_1_primMessage = 1;
-static const long asn_VAL_2_cplxMessage = 2;
+static const int64_t asn_VAL_1_primMessage = 1;
+static const int64_t asn_VAL_2_cplxMessage = 2;
 static const asn_ioc_cell_t asn_IOS_FrameTypes_1_rows[] = {
 	{ "&id", aioc__value, &asn_DEF_ConstrainedInteger, &asn_VAL_1_primMessage },
 	{ "&Type", aioc__type, &asn_DEF_PrimitiveMessage },
@@ -64,7 +64,7 @@ static const asn_ioc_set_t asn_IOS_FrameTypes_1[] = {
 static int
 memb_ident_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -73,7 +73,7 @@ memb_ident_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= 0 && value <= 32767)) {
 		/* Constraint check succeeded */
@@ -93,7 +93,7 @@ select_Frame_value_type(const asn_TYPE_descriptor_t *parent_type, const void *pa
 	size_t constraining_column = 0; /* &id */
 	size_t for_column = 1; /* &Type */
 	size_t row;
-	const long *constraining_value = (const long *)((const char *)parent_sptr + offsetof(struct Frame, ident));
+	const int64_t *constraining_value = (const int64_t *)((const char *)parent_sptr + offsetof(struct Frame, ident));
 	
 	for(row=0; row < itable->rows_count; row++) {
 	    const asn_ioc_cell_t *constraining_cell = &itable->rows[row * itable->columns_count + constraining_column];
@@ -238,7 +238,7 @@ asn_TYPE_descriptor_t asn_DEF_Frame = {
 
 /*** <<< TYPE-DECLS [ConstrainedInteger] >>> ***/
 
-typedef long	 ConstrainedInteger_t;
+typedef int64_t	 ConstrainedInteger_t;
 
 /*** <<< FUNC-DECLS [ConstrainedInteger] >>> ***/
 
@@ -256,7 +256,7 @@ xer_type_encoder_f ConstrainedInteger_encode_xer;
 int
 ConstrainedInteger_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -265,7 +265,7 @@ ConstrainedInteger_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= 0 && value <= 32767)) {
 		/* Constraint check succeeded */

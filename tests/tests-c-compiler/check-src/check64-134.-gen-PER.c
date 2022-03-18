@@ -12,26 +12,26 @@
 
 #include <T.h>
 
-static unsigned long i2ul(const INTEGER_t *i) {
-    unsigned long l;
+static uint64_t i2ul(const INTEGER_t *i) {
+    uint64_t l;
     int ret = asn_INTEGER2ulong(i, &l);
     assert(ret == 0);
     return l;
 }
 
-static long i2l(const INTEGER_t *i) {
-    long l;
+static int64_t i2l(const INTEGER_t *i) {
+    int64_t l;
     int ret = asn_INTEGER2long(i, &l);
     assert(ret == 0);
     return l;
 }
 
-static void ul2i(INTEGER_t *i, unsigned long l) {
+static void ul2i(INTEGER_t *i, uint64_t l) {
     int ret = asn_ulong2INTEGER(i, l);
     assert(ret == 0);
 }
 
-static void l2i(INTEGER_t *i, long l) {
+static void l2i(INTEGER_t *i, int64_t l) {
     int ret = asn_long2INTEGER(i, l);
     assert(ret == 0);
 }
@@ -43,7 +43,7 @@ verify(int testNo, T_t *ti) {
 	unsigned char buf[20];
 	T_t *to = 0;
 
-	fprintf(stderr, "%d IN: { %lu, %lu, %ld, %ld }\n", testNo,
+	fprintf(stderr, "%d IN: { %"PRIu64", %"PRIu64", %"PRIi64", %"PRIi64" }\n", testNo,
 		i2ul(&ti->unsigned33), i2ul(&ti->unsigned42),
 		i2l(&ti->signed33), i2l(&ti->signed33ext)
     );
@@ -57,7 +57,7 @@ verify(int testNo, T_t *ti) {
 	fprintf(stderr, "%d ENC: %2x%2x%2x%2x %2x%2x%2x%2x\n", testNo,
 		buf[0], buf[1], buf[2], buf[3],
 		buf[4], buf[5], buf[6], buf[7]);
-	fprintf(stderr, "%d OUT: { %lu, %lu, %ld, %ld } vs { %lu, %lu, %ld, %ld }\n",
+	fprintf(stderr, "%d OUT: { %"PRIu64", %"PRIu64", %"PRIi64", %"PRIi64" } vs { %"PRIu64", %"PRIu64", %"PRIi64", %"PRIi64" }\n",
 		testNo,
 		i2ul(&ti->unsigned33), i2ul(&ti->unsigned42),
 		i2l(&ti->signed33), i2l(&ti->signed33ext),
@@ -78,7 +78,7 @@ NO_encode(int testNo, T_t *ti) {
 	asn_enc_rval_t er;
 	unsigned char buf[16];
 
-	fprintf(stderr, "%d IN: { %lu, %lu, %ld, %ld }\n", testNo,
+	fprintf(stderr, "%d IN: { %"PRIu64", %"PRIu64", %"PRIi64", %"PRIi64" }\n", testNo,
 		i2ul(&ti->unsigned33), i2ul(&ti->unsigned42),
 		i2l(&ti->signed33), i2l(&ti->signed33ext)
     );

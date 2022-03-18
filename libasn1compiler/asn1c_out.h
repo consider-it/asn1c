@@ -136,7 +136,7 @@ int asn1c_compiled_output(arg_t *arg, const char *file, int lineno,
 } while(0)
 
 /*
- * Format LONG_MIN according to C90 rules.
+ * Format INT32_MIN according to C90 rules.
  */
 #define OINT(iv)                       \
     do {                               \

@@ -113,10 +113,10 @@ asn1c_emit_constraint_checking_code(arg_t *arg) {
 					ulong_optimize = ulong_optimization(arg, etype, r_size, r_value);
 					if(!ulong_optimize) {
 						value_unsigned = 1;
-						OUT("unsigned long value;\n");
+						OUT("uint64_t value;\n");
 					}
 				} else {
-					OUT("long value;\n");
+					OUT("int64_t value;\n");
 				}
 				break;
 			case ASN_BASIC_REAL:
@@ -159,7 +159,7 @@ asn1c_emit_constraint_checking_code(arg_t *arg) {
 	INDENT(+1);
 
 	/*
-	 * Optimization for unsigned longs.
+	 * Optimization for uint64_ts.
 	 */
 	if(ulong_optimize) {
 		OUT("\n");
@@ -653,9 +653,9 @@ emit_value_determination_code(arg_t *arg, asn1p_expr_type_e etype, asn1cnst_rang
 	case ASN_BASIC_INTEGER:
 	case ASN_BASIC_ENUMERATED:
 		if(asn1c_type_fits_long(arg, arg->expr) == FL_FITS_UNSIGN) {
-			OUT("value = *(const unsigned long *)sptr;\n");
+			OUT("value = *(const uint64_t *)sptr;\n");
 		} else if(asn1c_type_fits_long(arg, arg->expr) != FL_NOTFIT) {
-			OUT("value = *(const long *)sptr;\n");
+			OUT("value = *(const int64_t *)sptr;\n");
 		} else {
 			/*
 			 * In some cases we can explore our knowledge of
@@ -679,7 +679,7 @@ emit_value_determination_code(arg_t *arg, asn1p_expr_type_e etype, asn1cnst_rang
 			}
 
 			if(native_long_sign(arg, r_value) >= 0) {
-				/* Special case for treating unsigned longs */
+				/* Special case for treating uint64_ts */
 				OUT("if(asn_INTEGER2ulong(st, &value)) {\n");
 				INDENT(+1);
 				OUT("ASN__CTFAIL(app_key, td, sptr,\n");
@@ -715,7 +715,7 @@ emit_value_determination_code(arg_t *arg, asn1p_expr_type_e etype, asn1cnst_rang
 		}
 		break;
 	case ASN_BASIC_BOOLEAN:
-		OUT("value = (*(const long *)sptr) ? 1 : 0;\n");
+		OUT("value = (*(const int64_t *)sptr) ? 1 : 0;\n");
 		break;
 	default:
 		WARNING("%s:%d: Value cannot be determined "

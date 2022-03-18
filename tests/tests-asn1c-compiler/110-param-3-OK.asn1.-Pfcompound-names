@@ -21,13 +21,13 @@ typedef enum Flag_15P1__field {
 /*** <<< TYPE-DECLS [Flag] >>> ***/
 
 typedef struct Flag_15P0 {
-	long	*field	/* DEFAULT 5 */;
+	int64_t	*field	/* DEFAULT 5 */;
 	
 	/* Context for parsing across buffer boundaries */
 	asn_struct_ctx_t _asn_ctx;
 } Flag_15P0_t;
 typedef struct Flag_15P1 {
-	long	*field	/* DEFAULT 5 */;
+	int64_t	*field	/* DEFAULT 5 */;
 	
 	/* Context for parsing across buffer boundaries */
 	asn_struct_ctx_t _asn_ctx;
@@ -53,7 +53,7 @@ extern asn_TYPE_member_t asn_MBR_Flag_15P1_6[1];
 /*** <<< STAT-DEFS [Flag] >>> ***/
 
 static int asn_DFL_2_cmp_5(const void *sptr) {
-	const long *st = sptr;
+	const int64_t *st = sptr;
 	
 	if(!st) {
 		return -1; /* No value is not a default value */
@@ -63,7 +63,7 @@ static int asn_DFL_2_cmp_5(const void *sptr) {
 	return (*st != 5);
 }
 static int asn_DFL_2_set_5(void **sptr) {
-	long *st = *sptr;
+	int64_t *st = *sptr;
 	
 	if(!st) {
 		st = (*sptr = CALLOC(1, sizeof(*st)));
@@ -117,7 +117,7 @@ asn_TYPE_descriptor_t asn_DEF_Flag_15P0 = {
 };
 
 static int asn_DFL_7_cmp_5(const void *sptr) {
-	const long *st = sptr;
+	const int64_t *st = sptr;
 	
 	if(!st) {
 		return -1; /* No value is not a default value */
@@ -127,7 +127,7 @@ static int asn_DFL_7_cmp_5(const void *sptr) {
 	return (*st != 5);
 }
 static int asn_DFL_7_set_5(void **sptr) {
-	long *st = *sptr;
+	int64_t *st = *sptr;
 	
 	if(!st) {
 		st = (*sptr = CALLOC(1, sizeof(*st)));
@@ -154,7 +154,7 @@ static const asn_INTEGER_specifics_t asn_SPC_field_specs_7 = {
 	3,	/* Number of elements in the maps */
 	0,	/* Enumeration is not extensible */
 	1,	/* Strict enumeration */
-	0,	/* Native long size */
+	0,	/* Native int64_t size */
 	0
 };
 static const ber_tlv_tag_t asn_DEF_field_tags_7[] = {

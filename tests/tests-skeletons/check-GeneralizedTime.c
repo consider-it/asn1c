@@ -16,8 +16,8 @@ recognize(char *time_str, time_t expect, int as_gmt) {
 	gt.size = strlen(time_str);
 
 	tloc = asn_GT2time_frac(&gt, &fv, &fp, &tm, as_gmt);
-	printf("%s: [%s] -> %ld == %ld\n",
-		as_gmt?"GMT":"ofs", time_str, (long)tloc, (long)expect);
+	printf("%s: [%s] -> %"PRIi64" == %"PRIi64"\n",
+		as_gmt?"GMT":"ofs", time_str, (int64_t)tloc, (int64_t)expect);
 
 	if(tloc != -1) {
 		printf("\t%04d-%02d-%02dT%02d:%02d:%02d.%f(%d/%d)%+03ld%02ld\n",
@@ -83,8 +83,8 @@ recode(int lineno, char *time_str, const char *expect) {
 	assert(gt.buf);
 
 	tz = getenv("TZ");
-	printf("%d: [%s] (%ld) => [%s] == [%s] (%d, %d) (TZ=%s)\n",
-		lineno, time_str, (long)tloc, gt.buf,
+	printf("%d: [%s] (%"PRIi64") => [%s] == [%s] (%d, %d) (TZ=%s)\n",
+		lineno, time_str, (int64_t)tloc, gt.buf,
 		expect, frac_value, frac_digits,
 		tz ? tz : "");
 

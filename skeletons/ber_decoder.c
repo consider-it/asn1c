@@ -108,8 +108,8 @@ ber_check_tags(const asn_codec_ctx_t *opt_codec_ctx,
 	tagno = step	/* Continuing where left previously */
 		+ (tag_mode==1?-1:0)
 		;
-	ASN_DEBUG("ber_check_tags(%s, size=%ld, tm=%d, step=%d, tagno=%d)",
-		td->name, (long)size, tag_mode, step, tagno);
+	ASN_DEBUG("ber_check_tags(%s, size=%"PRIi64", tm=%d, step=%d, tagno=%d)",
+		td->name, (int64_t)size, tag_mode, step, tagno);
 	/* assert(td->tags_count >= 1) May not be the case for CHOICE or ANY */
 
 	if(tag_mode == 0 && tagno == (int)td->tags_count) {
@@ -130,8 +130,8 @@ ber_check_tags(const asn_codec_ctx_t *opt_codec_ctx,
 		case -1: RETURN(RC_FAIL);
 		case 0: RETURN(RC_WMORE);
 		}
-		ASN_DEBUG("Advancing %ld in ANY case",
-			(long)(tag_len + len_len));
+		ASN_DEBUG("Advancing %"PRIi64" in ANY case",
+			(int64_t)(tag_len + len_len));
 		ADVANCE(tag_len + len_len);
 	} else {
 		assert(tagno < (int)td->tags_count);	/* At least one loop */
@@ -142,10 +142,10 @@ ber_check_tags(const asn_codec_ctx_t *opt_codec_ctx,
 		 * Fetch and process T from TLV.
 		 */
 		tag_len = ber_fetch_tag(ptr, size, &tlv_tag);
-			ASN_DEBUG("Fetching tag from {%p,%ld}: "
-				"len %ld, step %d, tagno %d got %s",
-				ptr, (long)size,
-				(long)tag_len, step, tagno,
+			ASN_DEBUG("Fetching tag from {%p,%"PRIi64"}: "
+				"len %"PRIi64", step %d, tagno %d got %s",
+				ptr, (int64_t)size,
+				(int64_t)tag_len, step, tagno,
 				ber_tlv_tag_string(tlv_tag));
 		switch(tag_len) {
 		case -1: RETURN(RC_FAIL);
@@ -206,7 +206,7 @@ ber_check_tags(const asn_codec_ctx_t *opt_codec_ctx,
 		 */
 		len_len = ber_fetch_length(tlv_constr,
 			(const char *)ptr + tag_len, size - tag_len, &tlv_len);
-		ASN_DEBUG("Fetching len = %ld", (long)len_len);
+		ASN_DEBUG("Fetching len = %"PRIi64"", (int64_t)len_len);
 		switch(len_len) {
 		case -1: RETURN(RC_FAIL);
 		case 0: RETURN(RC_WMORE);
@@ -255,8 +255,8 @@ ber_check_tags(const asn_codec_ctx_t *opt_codec_ctx,
 			 * Inner TLV specifies length which is inconsistent
 			 * with the outer TLV's length value.
 			 */
-			ASN_DEBUG("Outer TLV is %ld and inner is %ld",
-				(long)limit_len, (long)tlv_len);
+			ASN_DEBUG("Outer TLV is %"PRIi64" and inner is %"PRIi64"",
+				(int64_t)limit_len, (int64_t)tlv_len);
 			RETURN(RC_FAIL);
 		}
 

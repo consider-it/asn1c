@@ -35,7 +35,7 @@ typedef struct Choice {
 			ch_PR present;
 			union Choice__ch_u {
 				NULL_t	 null;
-				long	 Int;
+				int64_t	 Int;
 			} choice;
 			
 			/* Context for parsing across buffer boundaries */

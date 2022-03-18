@@ -132,7 +132,7 @@ asn_get_few_bits(asn_bit_data_t *pd, int nbits) {
 	ASN_DEBUG("  [PER got %2d<=%2d bits => span %d %+ld[%d..%d]:%02x (%d) => 0x%x]",
 		(int)nbits, (int)nleft,
 		(int)pd->moved,
-		(((long)pd->buffer) & 0xf),
+		(((int64_t)pd->buffer) & 0xf),
 		(int)pd->nboff, (int)pd->nbits,
 		((pd->buffer != NULL)?pd->buffer[0]:0),
 		(int)(pd->nbits - pd->nboff),
@@ -215,8 +215,8 @@ asn_put_few_bits(asn_bit_outp_t *po, uint32_t bits, int obits) {
 		size_t complete_bytes;
 		if(!po->buffer) po->buffer = po->tmpspace;
 		complete_bytes = (po->buffer - po->tmpspace);
-		ASN_DEBUG("[PER output %ld complete + %ld]",
-			(long)complete_bytes, (long)po->flushed_bytes);
+		ASN_DEBUG("[PER output %"PRIi64" complete + %"PRIi64"]",
+			(int64_t)complete_bytes, (int64_t)po->flushed_bytes);
 		if(po->output(po->tmpspace, complete_bytes, po->op_key) < 0)
 			return -1;
 		if(po->nboff)
@@ -269,9 +269,9 @@ asn_put_few_bits(asn_bit_outp_t *po, uint32_t bits, int obits) {
 		if(asn_put_few_bits(po, bits, obits - 24)) return -1;
 	}
 
-	ASN_DEBUG("[PER out %u/%x => %02x buf+%ld]",
+	ASN_DEBUG("[PER out %u/%x => %02x buf+%"PRIi64"]",
 		(int)bits, (int)bits, buf[0],
-		(long)(po->buffer - po->tmpspace));
+		(int64_t)(po->buffer - po->tmpspace));
 
 	return 0;
 }

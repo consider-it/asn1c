@@ -62,7 +62,7 @@ ENUMERATED_decode_oer(const asn_codec_ctx_t *opt_codec_ctx,
                       const void *ptr, size_t size) {
     asn_dec_rval_t rval;
     ENUMERATED_t *st = (ENUMERATED_t *)*sptr;
-    long value;
+    int64_t value;
     void *vptr = &value;
 
     if(!st) {
@@ -86,7 +86,7 @@ ENUMERATED_encode_oer(const asn_TYPE_descriptor_t *td,
                       const void *sptr, asn_app_consume_bytes_f *cb,
                       void *app_key) {
     const ENUMERATED_t *st = sptr;
-	long value;
+	int64_t value;
 
 	if(asn_INTEGER2long(st, &value)) {
         ASN__ENCODE_FAILED;
@@ -106,7 +106,7 @@ ENUMERATED_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
                        asn_per_data_t *pd) {
     asn_dec_rval_t rval;
     ENUMERATED_t *st = (ENUMERATED_t *)*sptr;
-    long value;
+    int64_t value;
     void *vptr = &value;
 
     if(!st) {
@@ -129,7 +129,7 @@ ENUMERATED_encode_uper(const asn_TYPE_descriptor_t *td,
                        const asn_per_constraints_t *constraints,
                        const void *sptr, asn_per_outp_t *po) {
     const ENUMERATED_t *st = (const ENUMERATED_t *)sptr;
-    long value;
+    int64_t value;
 
     if(asn_INTEGER2long(st, &value)) {
         ASN__ENCODE_FAILED;

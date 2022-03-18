@@ -229,13 +229,13 @@ typedef enum PDU_2_PR {
 typedef struct PDU_2 {
 	PDU_2_PR present;
 	union PDU_2_u {
-		long	 main;
+		int64_t	 main;
 		/*
 		 * This type is extensible,
 		 * possible extensions are below.
 		 */
-		long	 ext1;
-		long	 ext0;
+		int64_t	 ext1;
+		int64_t	 ext0;
 	} choice;
 	
 	/* Context for parsing across buffer boundaries */

@@ -563,7 +563,7 @@ usage(const char *av0) {
 "  -fno-constraints      Do not generate the constraint checking code\n"
 "  -fno-include-deps     Do not generate the courtesy #includes for dependencies\n"
 "  -funnamed-unions      Enable unnamed unions in structures\n"
-"  -fwide-types          Use INTEGER_t instead of \"long\" by default, etc.\n"
+"  -fwide-types          Use INTEGER_t instead of \"int64_t\" by default, etc.\n"
 "\n"
 
 "  -no-gen-OER           Do not generate the OER (X.696) support code\n"

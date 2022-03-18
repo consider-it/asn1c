@@ -188,9 +188,9 @@ asn1c_lang_C_type_common_INTEGER(arg_t *arg) {
 		qsort(v2e, el_count, sizeof(v2e[0]), compar_enumMap_byValue);
 		for(eidx = 0; eidx < el_count; eidx++) {
 			v2e[eidx].idx = eidx;
-			OUT("\t{ %s,\t%ld,\t\"%s\" }%s\n",
+			OUT("\t{ %s,\t%"PRIi64",\t\"%s\" }%s\n",
 				asn1p_itoa(v2e[eidx].value),
-				(long)strlen(v2e[eidx].name), v2e[eidx].name,
+				(int64_t)strlen(v2e[eidx].name), v2e[eidx].name,
 				(eidx + 1 < el_count) ? "," : "");
 		}
 		if(map_extensions)
@@ -234,7 +234,7 @@ asn1c_lang_C_type_common_INTEGER(arg_t *arg) {
 			OUT("1,\t/* Strict enumeration */\n");
 		else
 			OUT("0,\n");
-		OUT("0,\t/* Native long size */\n");
+		OUT("0,\t/* Native int64_t size */\n");
 		OUT("0\n");
 		INDENT(-1);
 		OUT("};\n");
@@ -252,7 +252,7 @@ asn1c_lang_C_type_common_INTEGER(arg_t *arg) {
 		OUT("0,\t");
 		OUT("0,\t");
 		OUT("0,\n");
-		OUT("0,\t/* Native long size */\n");
+		OUT("0,\t/* Native int64_t size */\n");
 		OUT("1\t/* Unsigned representation */\n");
 		INDENT(-1);
 		OUT("};\n");
@@ -564,7 +564,7 @@ int
 asn1c_lang_C_type_SET(arg_t *arg) {
 	asn1p_expr_t *expr = arg->expr;
 	asn1p_expr_t *v;
-	long mcount;
+	int64_t mcount;
 	const char *id;
 	int comp_mode = 0;	/* {root,ext=1,root,root,...} */
 	int saved_target = arg->target->target;
@@ -617,7 +617,7 @@ asn1c_lang_C_type_SET(arg_t *arg) {
 		OUT("/* Presence bitmask: ASN_SET_ISPRESENT(p%s, %s_PR_x) */\n",
 			id, id);
 		OUT("unsigned int _presence_map\n");
-		OUT("\t[((%ld+(8*sizeof(unsigned int))-1)/(8*sizeof(unsigned int)))];\n", mcount);
+		OUT("\t[((%"PRIi64"+(8*sizeof(unsigned int))-1)/(8*sizeof(unsigned int)))];\n", mcount);
 	);
 
 	PCTX_DEF;
@@ -1632,9 +1632,9 @@ _add_tag2el_member(arg_t *arg, tag2el_t **tag2el, int *count, int el_no, fte_e f
 		if(p)	*tag2el = p;
 		else	return -1;
 
-		if(0) DEBUG("Found tag for %s: %ld",
+		if(0) DEBUG("Found tag for %s: %"PRIi64"",
 			arg->expr->Identifier,
-			(long)tag.tag_value);
+			(int64_t)tag.tag_value);
 
 		te = &((*tag2el)[*count]);
 		te->el_tag = tag;
@@ -1906,9 +1906,9 @@ emit_single_member_OER_constraint_value(arg_t *arg, asn1cnst_range_t *range) {
                 width = 1;
             } else if(ub <= 65535) {
                 width = 2;
-            } else if((unsigned long long)ub <= 4294967295UL) {
+            } else if((uint64_t)ub <= 4294967295UL) {
                 width = 4;
-            } else if((unsigned long long)ub <= 18446744073709551615ULL) {
+            } else if((uint64_t)ub <= 18446744073709551615ULL) {
                 width = 8;
             }
             positive = 1;
@@ -2380,7 +2380,7 @@ try_inline_default(arg_t *arg, asn1p_expr_t *expr, int out) {
 			OUT("return (*st != %s);\n",
 				asn1p_itoa(expr->marker.default_value->value.v_integer));
 		} else {
-			OUT("long value;\n");
+			OUT("int64_t value;\n");
 			OUT("if(asn_INTEGER2long(st, &value))\n");
 			OUT("\treturn -1;\n");
 			OUT("return (value != %s);\n",
@@ -2684,10 +2684,10 @@ emit_member_type_selector(arg_t *arg, asn1p_expr_t *expr, asn1c_ioc_table_and_ob
         break;
     case FL_PRESUMED:
     case FL_FITS_SIGNED:
-        OUT("const long *constraining_value = (const long *)");
+        OUT("const int64_t *constraining_value = (const int64_t *)");
         break;
     case FL_FITS_UNSIGN:
-        OUT("const unsigned long *constraining_value = (const unsigned long *)");
+        OUT("const uint64_t *constraining_value = (const uint64_t *)");
         break;
     }
     if(constraining_memb->marker.flags & EM_INDIRECT) {

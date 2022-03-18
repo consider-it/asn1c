@@ -96,10 +96,10 @@ static struct tm *gmtime_r(const time_t *tloc, struct tm *result) {
  */
 #ifdef __CYGWIN__
 #undef	GMTOFF
-static long GMTOFF(struct tm a){
+static int64_t GMTOFF(struct tm a){
 	struct tm *lt;
 	time_t local_time, gmt_time;
-	long zone;
+	int64_t zone;
 
 	tzset();
 	gmt_time = time (NULL);
@@ -609,7 +609,7 @@ asn_time2GT(GeneralizedTime_t *opt_gt, const struct tm *tm, int force_gmt) {
 GeneralizedTime_t *
 asn_time2GT_frac(GeneralizedTime_t *opt_gt, const struct tm *tm, int frac_value, int frac_digits, int force_gmt) {
 	struct tm tm_s;
-	long gmtoff;
+	int64_t gmtoff;
 	const unsigned int buf_size =
 		4 + 2 + 2	/* yyyymmdd */
 		+ 2 + 2 + 2	/* hhmmss */
@@ -668,7 +668,7 @@ asn_time2GT_frac(GeneralizedTime_t *opt_gt, const struct tm *tm, int frac_value,
 	if(frac_value > 0 && frac_digits > 0) {
 		char *end = p + 1 + 9;	/* '.' + maximum 9 digits */
 		char *z = p;
-		long fbase;
+		int64_t fbase;
 		*z++ = '.';
 
 		/* Place bounds on precision */

@@ -172,8 +172,8 @@ SEQUENCE_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 
 		NEXT_PHASE(ctx);
 
-		ASN_DEBUG("Structure consumes %ld bytes, buffer %ld",
-			(long)ctx->left, (long)size);
+		ASN_DEBUG("Structure consumes %"PRIi64" bytes, buffer %"PRIi64"",
+			(int64_t)ctx->left, (int64_t)size);
 
 		/* Fall through */
 	case 1:
@@ -227,9 +227,9 @@ SEQUENCE_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 		 */
 		tag_len = ber_fetch_tag(ptr, LEFT, &tlv_tag);
 		ASN_DEBUG("Current tag in %s SEQUENCE for element %" ASN_PRI_SIZE " "
-			"(%s) is %s encoded in %d bytes, of frame %ld",
+			"(%s) is %s encoded in %d bytes, of frame %"PRIi64"",
 			td->name, edx, elements[edx].name,
-			ber_tlv_tag_string(tlv_tag), (int)tag_len, (long)LEFT);
+			ber_tlv_tag_string(tlv_tag), (int)tag_len, (int64_t)LEFT);
 		switch(tag_len) {
 		case 0: if(!SIZE_VIOLATION) RETURN(RC_WMORE);
 			/* Fall through */
@@ -422,8 +422,8 @@ SEQUENCE_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 				ADVANCE(rval.consumed);
 				RETURN(RC_WMORE);
 			}
-			ASN_DEBUG("Size violation (c->l=%ld <= s=%ld)",
-				(long)ctx->left, (long)size);
+			ASN_DEBUG("Size violation (c->l=%"PRIi64" <= s=%"PRIi64")",
+				(int64_t)ctx->left, (int64_t)size);
 			/* Fall through */
 		case RC_FAIL: /* Fatal error */
 			RETURN(RC_FAIL);
@@ -438,8 +438,8 @@ SEQUENCE_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 	case 3:	/* 00 and other tags expected */
 	case 4:	/* only 00's expected */
 
-		ASN_DEBUG("SEQUENCE %s Leftover: %ld, size = %ld",
-			td->name, (long)ctx->left, (long)size);
+		ASN_DEBUG("SEQUENCE %s Leftover: %"PRIi64", size = %"PRIi64"",
+			td->name, (int64_t)ctx->left, (int64_t)size);
 
 		/*
 		 * Skip everything until the end of the SEQUENCE.
@@ -554,15 +554,15 @@ SEQUENCE_encode_der(const asn_TYPE_descriptor_t *td, const void *sptr,
 		if(erval.encoded == -1)
 			return erval;
 		computed_size += erval.encoded;
-		ASN_DEBUG("Member %" ASN_PRI_SIZE " %s estimated %ld bytes",
-			edx, elm->name, (long)erval.encoded);
+		ASN_DEBUG("Member %" ASN_PRI_SIZE " %s estimated %"PRIi64" bytes",
+			edx, elm->name, (int64_t)erval.encoded);
 	}
 
 	/*
 	 * Encode the TLV for the sequence itself.
 	 */
 	ret = der_write_tags(td, computed_size, tag_mode, 1, tag, cb, app_key);
-	ASN_DEBUG("Wrote tags: %ld (+%ld)", (long)ret, (long)computed_size);
+	ASN_DEBUG("Wrote tags: %"PRIi64" (+%"PRIi64")", (int64_t)ret, (int64_t)computed_size);
 	if(ret == -1)
 		ASN__ENCODE_FAILED;
 	erval.encoded = computed_size + ret;
@@ -596,8 +596,8 @@ SEQUENCE_encode_der(const asn_TYPE_descriptor_t *td, const void *sptr,
 		if(tmperval.encoded == -1)
 			return tmperval;
 		computed_size -= tmperval.encoded;
-		ASN_DEBUG("Member %" ASN_PRI_SIZE " %s of SEQUENCE %s encoded in %ld bytes",
-			edx, elm->name, td->name, (long)tmperval.encoded);
+		ASN_DEBUG("Member %" ASN_PRI_SIZE " %s of SEQUENCE %s encoded in %"PRIi64" bytes",
+			edx, elm->name, td->name, (int64_t)tmperval.encoded);
 	}
 
 	if(computed_size != 0)
@@ -1211,8 +1211,8 @@ SEQUENCE_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
 		memset(&epmd, 0, sizeof(epmd));
 		epmd.buffer = epres;
 		epmd.nbits = bmlength;
-		ASN_DEBUG("Read in extensions bitmap for %s of %ld bits (%x..)",
-			td->name, (long)bmlength, *epres);
+		ASN_DEBUG("Read in extensions bitmap for %s of %"PRIi64" bits (%x..)",
+			td->name, (int64_t)bmlength, *epres);
 
 	    /* Go over extensions and read them in */
         for(edx = specs->first_extension; edx < td->elements_count; edx++) {

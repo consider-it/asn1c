@@ -23,7 +23,7 @@ static void normalize(asn_per_outp_t *po) {
 }
 
 static void
-check_per_encode_constrained(int lineno, int unsigned_, long value, long lbound, unsigned long ubound, int bit_range) {
+check_per_encode_constrained(int lineno, int unsigned_, int64_t value, int64_t lbound, uint64_t ubound, int bit_range) {
 	INTEGER_t st;
 	INTEGER_t *reconstructed_st = 0;
 	struct asn_INTEGER_specifics_s specs;
@@ -34,10 +34,10 @@ check_per_encode_constrained(int lineno, int unsigned_, long value, long lbound,
 	asn_per_data_t pd;
 
 	if(unsigned_)
-		printf("%d: Recoding %s %lu [%ld..%lu]\n", lineno,
+		printf("%d: Recoding %s %"PRIu64" [%"PRIi64"..%"PRIu64"]\n", lineno,
 		  unsigned_ ? "unsigned" : "signed", value, lbound, ubound);
 	else
-		printf("%d: Recoding %s %ld [%ld..%lu]\n", lineno,
+		printf("%d: Recoding %s %"PRIi64" [%"PRIi64"..%"PRIu64"]\n", lineno,
 		  unsigned_ ? "unsigned" : "signed", value, lbound, ubound);
 
     if(ubound > LONG_MAX) {
@@ -58,7 +58,7 @@ check_per_encode_constrained(int lineno, int unsigned_, long value, long lbound,
 	cts.value.upper_bound = ubound;
 
 	if(unsigned_)
-		asn_ulong2INTEGER(&st, (unsigned long)value);
+		asn_ulong2INTEGER(&st, (uint64_t)value);
 	else
 		asn_long2INTEGER(&st, value);
 
@@ -67,7 +67,7 @@ check_per_encode_constrained(int lineno, int unsigned_, long value, long lbound,
 	po.nbits = 8 * sizeof(po.tmpspace);
 	po.output = FailOut;
 
-	specs.field_width = sizeof(long);
+	specs.field_width = sizeof(int64_t);
 	specs.field_unsigned = unsigned_;
 
 	asn_DEF_INTEGER.specifics = &specs;
@@ -79,21 +79,21 @@ check_per_encode_constrained(int lineno, int unsigned_, long value, long lbound,
 	assert(po.buffer == &po.tmpspace[bit_range / 8]);
 
 	if(unsigned_) {
-		unsigned long recovered_value =
+		uint64_t recovered_value =
 			  ((uint32_t)po.tmpspace[0] << 24)
 			| ((uint32_t)po.tmpspace[1] << 16)
 			| ((uint32_t)po.tmpspace[2] << 8)
 			| ((uint32_t)po.tmpspace[3] << 0);
 		recovered_value >>= (32 - bit_range);
 		recovered_value += cts.value.lower_bound;
-		assert(recovered_value == (unsigned long)value);
+		assert(recovered_value == (uint64_t)value);
 	} else {
-		long recovered_value =
+		int64_t recovered_value =
 			  ((uint32_t)po.tmpspace[0] << 24)
 			| ((uint32_t)po.tmpspace[1] << 16)
 			| ((uint32_t)po.tmpspace[2] << 8)
 			| ((uint32_t)po.tmpspace[3] << 0);
-		recovered_value = (unsigned long)recovered_value >> (32 - bit_range);
+		recovered_value = (uint64_t)recovered_value >> (32 - bit_range);
         if(per_long_range_unrebase(recovered_value, cts.value.lower_bound,
                                    cts.value.upper_bound, &recovered_value)
            < 0) {
@@ -113,11 +113,11 @@ check_per_encode_constrained(int lineno, int unsigned_, long value, long lbound,
 					(void **)&reconstructed_st, &pd);
 	assert(dec_rval.code == RC_OK);
 	if(unsigned_) {
-		unsigned long reconstructed_value = 0;
+		uint64_t reconstructed_value = 0;
 		asn_INTEGER2ulong(reconstructed_st, &reconstructed_value);
-		assert(reconstructed_value == (unsigned long)value);
+		assert(reconstructed_value == (uint64_t)value);
 	} else {
-		long reconstructed_value = 0;
+		int64_t reconstructed_value = 0;
 		asn_INTEGER2long(reconstructed_st, &reconstructed_value);
 		assert(reconstructed_value == value);
 	}

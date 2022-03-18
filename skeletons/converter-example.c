@@ -379,7 +379,7 @@ main(int ac, char *av[]) {
 #endif    /* ASN_PDU_COLLECTION */
         fprintf(stderr,
         "  -1           Decode only the first PDU in file\n"
-        "  -b <size>    Set the i/o buffer size (default is %ld)\n"
+        "  -b <size>    Set the i/o buffer size (default is %"PRIi64")\n"
         "  -c           Check ASN.1 constraints after decoding\n"
         "  -d           Enable debugging (-dd is even better)\n"
         "  -n <num>     Process files <num> times\n"
@@ -389,7 +389,7 @@ main(int ac, char *av[]) {
         "  -R <size>    Generate a random value of roughly the given size,\n"
         "               instead of parsing the value from file.\n"
 #endif
-        , (long)suggested_bufsize, ASN__DEFAULT_STACK_MAX);
+        , (int64_t)suggested_bufsize, ASN__DEFAULT_STACK_MAX);
         exit(EX_USAGE);
     }
 
@@ -580,7 +580,7 @@ buffer_dump() {
                 (ssize_t)DynamicBuffer.length - 1,
                 (ssize_t)8 - DynamicBuffer.unbits);
     } else {
-        fprintf(stderr, " %ld\n", (long)DynamicBuffer.length);
+        fprintf(stderr, " %"PRIi64"\n", (int64_t)DynamicBuffer.length);
     }
 }
 
@@ -596,11 +596,11 @@ buffer_shift_left(size_t offset, int bits) {
     
     if(!bits) return;
 
-    DEBUG("Shifting left %d bits off %ld (o=%ld, u=%ld, l=%ld)",
-        bits, (long)offset,
-        (long)DynamicBuffer.offset,
-        (long)DynamicBuffer.unbits,
-        (long)DynamicBuffer.length);
+    DEBUG("Shifting left %d bits off %"PRIi64" (o=%"PRIi64", u=%"PRIi64", l=%"PRIi64")",
+        bits, (int64_t)offset,
+        (int64_t)DynamicBuffer.offset,
+        (int64_t)DynamicBuffer.unbits,
+        (int64_t)DynamicBuffer.length);
 
     if(offset) {
         int right;
@@ -698,7 +698,7 @@ static void add_bytes_to_buffer(const void *data2add, size_t bytes) {
        >= (DynamicBuffer.offset + DynamicBuffer.length + bytes)) {
         DEBUG("\tNo buffer reallocation is necessary");
     } else if(bytes <= DynamicBuffer.offset) {
-        DEBUG("\tContents shifted by %ld", DynamicBuffer.offset);
+        DEBUG("\tContents shifted by %"PRIi64"", DynamicBuffer.offset);
 
         /* Shift the buffer contents */
         memmove(DynamicBuffer.data,
@@ -721,7 +721,7 @@ static void add_bytes_to_buffer(const void *data2add, size_t bytes) {
         DynamicBuffer.offset = 0;
         DynamicBuffer.allocated = newsize;
         DynamicBuffer.nreallocs++;
-        DEBUG("\tBuffer reallocated to %ld (%d time)",
+        DEBUG("\tBuffer reallocated to %"PRIi64" (%d time)",
             newsize, DynamicBuffer.nreallocs);
     }
 
@@ -889,18 +889,18 @@ data_decode_from_file(enum asn_transfer_syntax isyntax, asn_TYPE_descriptor_t *p
         switch(rval.code) {
         case RC_OK:
             if(ecbits) buffer_shift_left(0, ecbits);
-            DEBUG("RC_OK, finishing up with %ld+%d",
-                (long)rval.consumed, ecbits);
+            DEBUG("RC_OK, finishing up with %"PRIi64"+%d",
+                (int64_t)rval.consumed, ecbits);
             return structure;
         case RC_WMORE:
-            DEBUG("RC_WMORE, continuing read=%ld, cons=%ld "
-                " with %ld..%ld-%ld..%ld",
-                (long)rd,
-                (long)rval.consumed,
-                (long)DynamicBuffer.offset,
-                (long)DynamicBuffer.length,
-                (long)DynamicBuffer.unbits,
-                (long)DynamicBuffer.allocated);
+            DEBUG("RC_WMORE, continuing read=%"PRIi64", cons=%"PRIi64" "
+                " with %"PRIi64"..%"PRIi64"-%"PRIi64"..%"PRIi64"",
+                (int64_t)rd,
+                (int64_t)rval.consumed,
+                (int64_t)DynamicBuffer.offset,
+                (int64_t)DynamicBuffer.length,
+                (int64_t)DynamicBuffer.unbits,
+                (int64_t)DynamicBuffer.allocated);
             if(!rd) tolerate_eof--;
             continue;
         case RC_FAIL:
@@ -935,12 +935,12 @@ data_decode_from_file(enum asn_transfer_syntax isyntax, asn_TYPE_descriptor_t *p
         }
 #endif
 
-        DEBUG("ofp %d, no=%ld, oo=%ld, dbl=%ld",
-            on_first_pdu, (long)new_offset, (long)old_offset,
-            (long)DynamicBuffer.length);
+        DEBUG("ofp %d, no=%"PRIi64", oo=%"PRIi64", dbl=%"PRIi64"",
+            on_first_pdu, (int64_t)new_offset, (int64_t)old_offset,
+            (int64_t)DynamicBuffer.length);
         fprintf(stderr, "%s: "
-            "Decode failed past byte %ld: %s\n",
-            name, (long)new_offset,
+            "Decode failed past byte %"PRIi64": %s\n",
+            name, (int64_t)new_offset,
             (rval.code == RC_WMORE)
                 ? "Unexpected end of input"
                 : "Input processing error");

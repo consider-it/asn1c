@@ -308,7 +308,7 @@ process_line(const char *fname, char *line, int lineno) {
 	}
     /* clang-format on */
 
-    unsigned long tag_value_UL;
+    uint64_t tag_value_UL;
     errno = 0;
     if(!*tcl_pos || ((tag_value_UL = strtoul(tcl_pos, 0, 10)) > UINT_MAX)
        || errno) {
@@ -332,8 +332,8 @@ process_line(const char *fname, char *line, int lineno) {
     if(opt_tl_len && ret != opt_tl_len) {
         fprintf(stderr,
                 "%s: Cannot encode TL at line %d "
-                "in the given number of bytes (%ld!=%ld)\n",
-                fname, lineno, (long)ret, (long)opt_tl_len);
+                "in the given number of bytes (%"PRIi64"!=%"PRIi64")\n",
+                fname, lineno, (int64_t)ret, (int64_t)opt_tl_len);
         exit(EX_DATAERR);
     }
     if(constr) *buf |= 0x20; /* Enable "constructed" bit */
@@ -392,9 +392,9 @@ process_line(const char *fname, char *line, int lineno) {
         if(len != tlv_len) {
             if(no_validation) fprintf(stderr, "Warning: ");
             fprintf(stderr,
-                    "%s: Could not encode value of %ld chars "
-                    "at line %d in %ld bytes\n",
-                    fname, (long)len, lineno, (long)tlv_len);
+                    "%s: Could not encode value of %"PRIi64" chars "
+                    "at line %d in %"PRIi64" bytes\n",
+                    fname, (int64_t)len, lineno, (int64_t)tlv_len);
             if(!no_validation) exit(EX_DATAERR);
         }
     }

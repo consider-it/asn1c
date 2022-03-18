@@ -98,7 +98,7 @@ NumericString_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 				continue;
 			}
 			ASN__CTFAIL(app_key, td, sptr,
-				"%s: value byte %ld (%d) "
+				"%s: value byte %li (%d) "
 				"not in NumericString alphabet (%s:%d)",
 				td->name,
 				(long)((buf - st->buf) + 1),

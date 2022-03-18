@@ -70,9 +70,9 @@ ber_decode_primitive(const asn_codec_ctx_t *opt_codec_ctx,
 	rval.code = RC_OK;
 	rval.consumed += length;
 
-	ASN_DEBUG("Took %ld/%ld bytes to encode %s",
-		(long)rval.consumed,
-		(long)length, td->name);
+	ASN_DEBUG("Took %"PRIi64"/%"PRIi64" bytes to encode %s",
+		(int64_t)rval.consumed,
+		(int64_t)length, td->name);
 
 	return rval;
 }

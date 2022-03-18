@@ -351,7 +351,7 @@ BIT_STRING_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
 		if(!st) RETURN(RC_FAIL);
 	}
 
-	ASN_DEBUG("PER Decoding %s size %ld .. %ld bits %d",
+	ASN_DEBUG("PER Decoding %s size %"PRIi64" .. %"PRIi64" bits %d",
 		csiz->flags & APC_EXTENSIBLE ? "extensible" : "non-extensible",
 		csiz->lower_bound, csiz->upper_bound, csiz->effective_bits);
 
@@ -375,7 +375,7 @@ BIT_STRING_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
 	/* X.691, #16.7: long fixed length encoding (up to 64K octets) */
 	if(csiz->effective_bits == 0) {
 		int ret;
-        ASN_DEBUG("Encoding BIT STRING size %ld", csiz->upper_bound);
+        ASN_DEBUG("Encoding BIT STRING size %"PRIi64"", csiz->upper_bound);
         ret = per_get_many_bits(pd, st->buf, 0, csiz->upper_bound);
 		if(ret < 0) RETURN(RC_WMORE);
 		consumed_myself += csiz->upper_bound;
@@ -398,8 +398,8 @@ BIT_STRING_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
 		if(raw_len < 0) RETURN(RC_WMORE);
         if(raw_len == 0 && st->buf) break;
 
-		ASN_DEBUG("Got PER length eb %ld, len %ld, %s (%s)",
-			(long)csiz->effective_bits, (long)raw_len,
+		ASN_DEBUG("Got PER length eb %"PRIi64", len %"PRIi64", %s (%s)",
+			(int64_t)csiz->effective_bits, (int64_t)raw_len,
 			repeat ? "repeat" : "once", td->name);
         len_bits = raw_len;
         len_bytes = (len_bits + 7) >> 3;
@@ -460,7 +460,7 @@ BIT_STRING_encode_uper(const asn_TYPE_descriptor_t *td,
 
     ASN_DEBUG(
         "Encoding %s into %" ASN_PRI_SIZE " bits"
-        " (%ld..%ld, effective %d)%s",
+        " (%"PRIi64"..%"PRIi64", effective %d)%s",
         td->name, size_in_bits, csiz->lower_bound, csiz->upper_bound,
         csiz->effective_bits, ct_extensible ? " EXT" : "");
 
@@ -488,7 +488,7 @@ BIT_STRING_encode_uper(const asn_TYPE_descriptor_t *td,
     if(csiz->effective_bits >= 0 && !inext) {
         int add_trailer = (ssize_t)size_in_bits < csiz->lower_bound;
         ASN_DEBUG(
-            "Encoding %" ASN_PRI_SIZE " bytes (%ld), length (in %d bits) trailer %d; actual "
+            "Encoding %" ASN_PRI_SIZE " bytes (%"PRIi64"), length (in %d bits) trailer %d; actual "
             "value %" ASN_PRI_SSIZE "",
             st->size, size_in_bits - csiz->lower_bound, csiz->effective_bits,
             add_trailer,
@@ -579,7 +579,7 @@ BIT_STRING_random_fill(const asn_TYPE_descriptor_t *td, void **sptr,
     if(constraints->per_constraints) {
         const asn_per_constraint_t *pc = &constraints->per_constraints->size;
         if(pc->flags & APC_CONSTRAINED) {
-            long suggested_upper_bound = pc->upper_bound < (ssize_t)max_length
+            int64_t suggested_upper_bound = pc->upper_bound < (ssize_t)max_length
                                              ? pc->upper_bound
                                              : (ssize_t)max_length;
             if(max_length < (size_t)pc->lower_bound) {

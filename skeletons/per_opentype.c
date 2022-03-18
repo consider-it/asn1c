@@ -105,8 +105,8 @@ uper_open_type_get_simple(const asn_codec_ctx_t *ctx,
 		bufLen += chunk_bytes;
 	} while(repeat);
 
-	ASN_DEBUG("Getting open type %s encoded in %ld bytes", td->name,
-		(long)bufLen);
+	ASN_DEBUG("Getting open type %s encoded in %"PRIi64" bytes", td->name,
+		(int64_t)bufLen);
 
 	memset(&spd, 0, sizeof(spd));
 	spd.buffer = buf;
@@ -311,8 +311,8 @@ uper_ugot_refill(asn_per_data_t *pd) {
 
 	asn_per_data_t *oldpd = &arg->oldpd;
 
-	ASN_DEBUG("REFILLING pd->moved=%ld, oldpd->moved=%ld",
-		(long)pd->moved, (long)oldpd->moved);
+	ASN_DEBUG("REFILLING pd->moved=%"PRIi64", oldpd->moved=%"PRIi64"",
+		(int64_t)pd->moved, (int64_t)oldpd->moved);
 
 	/* Advance our position to where pd is */
 	oldpd->buffer = pd->buffer;
@@ -332,8 +332,8 @@ uper_ugot_refill(asn_per_data_t *pd) {
 		pd->buffer = oldpd->buffer;
 		pd->nboff = oldpd->nboff - 1;
 		pd->nbits = oldpd->nbits;
-		ASN_DEBUG("UNCLAIMED <- return from (pd->moved=%ld)",
-			(long)pd->moved);
+		ASN_DEBUG("UNCLAIMED <- return from (pd->moved=%"PRIi64")",
+			(int64_t)pd->moved);
 		return 0;
 	}
 
@@ -343,8 +343,8 @@ uper_ugot_refill(asn_per_data_t *pd) {
 	}
 
 	next_chunk_bytes = uper_get_length(oldpd, -1, 0, &arg->repeat);
-	ASN_DEBUG("Open type LENGTH %ld bytes at off %ld, repeat %ld",
-		(long)next_chunk_bytes, (long)oldpd->moved, (long)arg->repeat);
+	ASN_DEBUG("Open type LENGTH %"PRIi64" bytes at off %"PRIi64", repeat %"PRIi64"",
+		(int64_t)next_chunk_bytes, (int64_t)oldpd->moved, (int64_t)arg->repeat);
 	if(next_chunk_bytes < 0) return -1;
 	if(next_chunk_bytes == 0) {
 		pd->refill = 0;	/* No more refills, naturally */
@@ -355,16 +355,16 @@ uper_ugot_refill(asn_per_data_t *pd) {
 	if(avail >= next_chunk_bits) {
 		pd->nbits = oldpd->nboff + next_chunk_bits;
 		arg->unclaimed = 0;
-		ASN_DEBUG("!+Parent frame %ld bits, alloting %ld [%ld..%ld] (%ld)",
-			(long)next_chunk_bits, (long)oldpd->moved,
-			(long)oldpd->nboff, (long)oldpd->nbits,
-			(long)(oldpd->nbits - oldpd->nboff));
+		ASN_DEBUG("!+Parent frame %"PRIi64" bits, alloting %"PRIi64" [%"PRIi64"..%"PRIi64"] (%"PRIi64")",
+			(int64_t)next_chunk_bits, (int64_t)oldpd->moved,
+			(int64_t)oldpd->nboff, (int64_t)oldpd->nbits,
+			(int64_t)(oldpd->nbits - oldpd->nboff));
 	} else {
 		pd->nbits = oldpd->nbits;
 		arg->unclaimed = next_chunk_bits - avail;
-		ASN_DEBUG("!-Parent frame %ld, require %ld, will claim %ld",
-			(long)avail, (long)next_chunk_bits,
-			(long)arg->unclaimed);
+		ASN_DEBUG("!-Parent frame %"PRIi64", require %"PRIi64", will claim %"PRIi64"",
+			(int64_t)avail, (int64_t)next_chunk_bits,
+			(int64_t)arg->unclaimed);
 	}
 	pd->buffer = oldpd->buffer;
 	pd->nboff = oldpd->nboff;

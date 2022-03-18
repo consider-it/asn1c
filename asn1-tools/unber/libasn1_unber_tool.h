@@ -29,7 +29,7 @@
 void set_minimalistic_output(int v);
 void set_single_type_decoding(int v);
 void set_pretty_printing(int v);
-int set_skip_bytes(long v);
+int set_skip_bytes(int64_t v);
 int set_indent_size(int indent_size);
 
 /*

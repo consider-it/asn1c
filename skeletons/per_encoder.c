@@ -136,7 +136,7 @@ uper_encode_to_new_buffer(const asn_TYPE_descriptor_t *td,
 		}
 	default:
 		*buffer_r = key.buffer;
-		ASN_DEBUG("Complete encoded in %ld bits", (long)er.encoded);
+		ASN_DEBUG("Complete encoded in %"PRIi64" bits", (int64_t)er.encoded);
 		return ((er.encoded + 7) >> 3);
 	}
 }
