@@ -5,7 +5,7 @@
 
 /*** <<< TYPE-DECLS [CN-IntegerUnlimited] >>> ***/
 
-typedef long	 CN_IntegerUnlimited_t;
+typedef int64_t	 CN_IntegerUnlimited_t;
 
 /*** <<< FUNC-DECLS [CN-IntegerUnlimited] >>> ***/
 
@@ -54,7 +54,7 @@ asn_TYPE_descriptor_t asn_DEF_CN_IntegerUnlimited = {
 
 /*** <<< TYPE-DECLS [CN-IntegerMinMax] >>> ***/
 
-typedef long	 CN_IntegerMinMax_t;
+typedef int64_t	 CN_IntegerMinMax_t;
 
 /*** <<< FUNC-DECLS [CN-IntegerMinMax] >>> ***/
 
@@ -130,7 +130,7 @@ asn_TYPE_descriptor_t asn_DEF_CN_IntegerMinMax = {
 
 /*** <<< TYPE-DECLS [CN-IntegerMinLow] >>> ***/
 
-typedef long	 CN_IntegerMinLow_t;
+typedef int64_t	 CN_IntegerMinLow_t;
 
 /*** <<< FUNC-DECLS [CN-IntegerMinLow] >>> ***/
 
@@ -150,7 +150,7 @@ per_type_encoder_f CN_IntegerMinLow_encode_uper;
 int
 CN_IntegerMinLow_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -159,7 +159,7 @@ CN_IntegerMinLow_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value <= 1)) {
 		/* Constraint check succeeded */
@@ -233,7 +233,7 @@ int
 NO_IntegerMinHigh_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
 	const INTEGER_t *st = (const INTEGER_t *)sptr;
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -300,7 +300,7 @@ asn_TYPE_descriptor_t asn_DEF_NO_IntegerMinHigh = {
 
 /*** <<< TYPE-DECLS [NO-IntegerLowHigh] >>> ***/
 
-typedef unsigned long	 NO_IntegerLowHigh_t;
+typedef uint64_t	 NO_IntegerLowHigh_t;
 
 /*** <<< FUNC-DECLS [NO-IntegerLowHigh] >>> ***/
 
@@ -320,7 +320,7 @@ per_type_encoder_f NO_IntegerLowHigh_encode_uper;
 int
 NO_IntegerLowHigh_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	unsigned long value;
+	uint64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -329,7 +329,7 @@ NO_IntegerLowHigh_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const unsigned long *)sptr;
+	value = *(const uint64_t *)sptr;
 	
 	if((value >= 1 && value <= 3000000000)) {
 		/* Constraint check succeeded */
@@ -387,7 +387,7 @@ asn_TYPE_descriptor_t asn_DEF_NO_IntegerLowHigh = {
 
 /*** <<< TYPE-DECLS [CN-IntegerLowMax] >>> ***/
 
-typedef unsigned long	 CN_IntegerLowMax_t;
+typedef uint64_t	 CN_IntegerLowMax_t;
 
 /*** <<< FUNC-DECLS [CN-IntegerLowMax] >>> ***/
 
@@ -407,7 +407,7 @@ per_type_encoder_f CN_IntegerLowMax_encode_uper;
 int
 CN_IntegerLowMax_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	unsigned long value;
+	uint64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -416,7 +416,7 @@ CN_IntegerLowMax_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const unsigned long *)sptr;
+	value = *(const uint64_t *)sptr;
 	
 	if((value >= 1)) {
 		/* Constraint check succeeded */
@@ -495,7 +495,7 @@ int
 NO_IntegerHighMax_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
 	const INTEGER_t *st = (const INTEGER_t *)sptr;
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -583,7 +583,7 @@ int
 NO_IntegerLowestMax_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
 	const INTEGER_t *st = (const INTEGER_t *)sptr;
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -650,7 +650,7 @@ asn_TYPE_descriptor_t asn_DEF_NO_IntegerLowestMax = {
 
 /*** <<< TYPE-DECLS [NO-IntegerOutRange] >>> ***/
 
-typedef unsigned long	 NO_IntegerOutRange_t;
+typedef uint64_t	 NO_IntegerOutRange_t;
 
 /*** <<< FUNC-DECLS [NO-IntegerOutRange] >>> ***/
 
@@ -670,7 +670,7 @@ per_type_encoder_f NO_IntegerOutRange_encode_uper;
 int
 NO_IntegerOutRange_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	unsigned long value;
+	uint64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -679,7 +679,7 @@ NO_IntegerOutRange_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const unsigned long *)sptr;
+	value = *(const uint64_t *)sptr;
 	
 	if((value >= 3000000000 && value <= 3000000001)) {
 		/* Constraint check succeeded */
@@ -737,7 +737,7 @@ asn_TYPE_descriptor_t asn_DEF_NO_IntegerOutRange = {
 
 /*** <<< TYPE-DECLS [NO-IntegerOutValue] >>> ***/
 
-typedef unsigned long	 NO_IntegerOutValue_t;
+typedef uint64_t	 NO_IntegerOutValue_t;
 
 /*** <<< FUNC-DECLS [NO-IntegerOutValue] >>> ***/
 
@@ -757,7 +757,7 @@ per_type_encoder_f NO_IntegerOutValue_encode_uper;
 int
 NO_IntegerOutValue_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	unsigned long value;
+	uint64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -766,7 +766,7 @@ NO_IntegerOutValue_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const unsigned long *)sptr;
+	value = *(const uint64_t *)sptr;
 	
 	if((value == 3000000000)) {
 		/* Constraint check succeeded */
@@ -824,7 +824,7 @@ asn_TYPE_descriptor_t asn_DEF_NO_IntegerOutValue = {
 
 /*** <<< TYPE-DECLS [OK-IntegerInRange1] >>> ***/
 
-typedef long	 OK_IntegerInRange1_t;
+typedef int64_t	 OK_IntegerInRange1_t;
 
 /*** <<< FUNC-DECLS [OK-IntegerInRange1] >>> ***/
 
@@ -844,7 +844,7 @@ per_type_encoder_f OK_IntegerInRange1_encode_uper;
 int
 OK_IntegerInRange1_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -853,7 +853,7 @@ OK_IntegerInRange1_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= -100 && value <= 100)) {
 		/* Constraint check succeeded */
@@ -906,7 +906,7 @@ asn_TYPE_descriptor_t asn_DEF_OK_IntegerInRange1 = {
 
 /*** <<< TYPE-DECLS [OK-IntegerInRange2] >>> ***/
 
-typedef long	 OK_IntegerInRange2_t;
+typedef int64_t	 OK_IntegerInRange2_t;
 
 /*** <<< FUNC-DECLS [OK-IntegerInRange2] >>> ***/
 
@@ -926,7 +926,7 @@ per_type_encoder_f OK_IntegerInRange2_encode_uper;
 int
 OK_IntegerInRange2_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -935,7 +935,7 @@ OK_IntegerInRange2_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if(((value == -100) || (value == 100))) {
 		/* Constraint check succeeded */
@@ -988,7 +988,7 @@ asn_TYPE_descriptor_t asn_DEF_OK_IntegerInRange2 = {
 
 /*** <<< TYPE-DECLS [OK-IntegerInRange3] >>> ***/
 
-typedef long	 OK_IntegerInRange3_t;
+typedef int64_t	 OK_IntegerInRange3_t;
 
 /*** <<< FUNC-DECLS [OK-IntegerInRange3] >>> ***/
 
@@ -1008,7 +1008,7 @@ per_type_encoder_f OK_IntegerInRange3_encode_uper;
 int
 OK_IntegerInRange3_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -1017,7 +1017,7 @@ OK_IntegerInRange3_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= (-2147483647L - 1) && value <= 2147483647)) {
 		/* Constraint check succeeded */
@@ -1070,7 +1070,7 @@ asn_TYPE_descriptor_t asn_DEF_OK_IntegerInRange3 = {
 
 /*** <<< TYPE-DECLS [OK-IntegerInRange4] >>> ***/
 
-typedef long	 OK_IntegerInRange4_t;
+typedef int64_t	 OK_IntegerInRange4_t;
 
 /*** <<< FUNC-DECLS [OK-IntegerInRange4] >>> ***/
 
@@ -1090,7 +1090,7 @@ per_type_encoder_f OK_IntegerInRange4_encode_uper;
 int
 OK_IntegerInRange4_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -1099,7 +1099,7 @@ OK_IntegerInRange4_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if(((value == (-2147483647L - 1)) || (value == 2147483647))) {
 		/* Constraint check succeeded */
@@ -1152,7 +1152,7 @@ asn_TYPE_descriptor_t asn_DEF_OK_IntegerInRange4 = {
 
 /*** <<< TYPE-DECLS [OK-IntegerInRange5] >>> ***/
 
-typedef long	 OK_IntegerInRange5_t;
+typedef int64_t	 OK_IntegerInRange5_t;
 
 /*** <<< FUNC-DECLS [OK-IntegerInRange5] >>> ***/
 
@@ -1172,7 +1172,7 @@ per_type_encoder_f OK_IntegerInRange5_encode_uper;
 int
 OK_IntegerInRange5_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -1181,7 +1181,7 @@ OK_IntegerInRange5_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if(((value == (-2147483647L - 1)) || (value == 2147483647))) {
 		/* Constraint check succeeded */
@@ -1234,7 +1234,7 @@ asn_TYPE_descriptor_t asn_DEF_OK_IntegerInRange5 = {
 
 /*** <<< TYPE-DECLS [NO-IntegerInRange6] >>> ***/
 
-typedef unsigned long	 NO_IntegerInRange6_t;
+typedef uint64_t	 NO_IntegerInRange6_t;
 
 /*** <<< FUNC-DECLS [NO-IntegerInRange6] >>> ***/
 
@@ -1319,7 +1319,7 @@ typedef enum CN_IntegerEnumerated1 {
 
 /*** <<< TYPE-DECLS [CN-IntegerEnumerated1] >>> ***/
 
-typedef long	 CN_IntegerEnumerated1_t;
+typedef int64_t	 CN_IntegerEnumerated1_t;
 
 /*** <<< FUNC-DECLS [CN-IntegerEnumerated1] >>> ***/
 

@@ -4,7 +4,7 @@
  */
 /*
  * This type differs from the standard INTEGER in that it is modelled using
- * the fixed machine type (long, int, short), so it can hold only values of
+ * the fixed machine type (int64_t, int, short), so it can hold only values of
  * limited length. There is no type (i.e., NativeInteger_t, any integer type
  * will do).
  * This type may be used when integer range is limited by subtype constraints.

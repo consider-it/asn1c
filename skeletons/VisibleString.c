@@ -75,10 +75,10 @@ VisibleString_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		for(; buf < end; buf++) {
 			if(*buf < 0x20 || *buf > 0x7e) {
 				ASN__CTFAIL(app_key, td, sptr,
-					"%s: value byte %ld (%d) "
+					"%s: value byte %"PRIi64" (%d) "
 					"not in VisibleString alphabet (%s:%d)",
 					td->name,
-					(long)((buf - st->buf) + 1),
+					(int64_t)((buf - st->buf) + 1),
 					*buf,
 					__FILE__, __LINE__);
 				return -1;

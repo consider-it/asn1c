@@ -5,7 +5,7 @@
 
 /*** <<< TYPE-DECLS [Short] >>> ***/
 
-typedef long	 Short_t;
+typedef int64_t	 Short_t;
 
 /*** <<< FUNC-DECLS [Short] >>> ***/
 
@@ -26,7 +26,7 @@ per_type_encoder_f Short_encode_uper;
 int
 Short_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -35,7 +35,7 @@ Short_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= 0 && value <= 65535)) {
 		/* Constraint check succeeded */
@@ -109,7 +109,7 @@ per_type_encoder_f Alias_encode_uper;
 int
 Alias_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -118,7 +118,7 @@ Alias_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= 0 && value <= 65535)) {
 		/* Constraint check succeeded */
@@ -175,7 +175,7 @@ asn_TYPE_descriptor_t asn_DEF_Alias = {
 /*** <<< TYPE-DECLS [Soo] >>> ***/
 
 typedef struct Soo {
-	long	 foo;
+	int64_t	 foo;
 	Short_t	 bar;
 	Alias_t	 baz;
 	
@@ -192,7 +192,7 @@ extern asn_TYPE_descriptor_t asn_DEF_Soo;
 static int
 memb_foo_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -201,7 +201,7 @@ memb_foo_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= 0 && value <= 65535)) {
 		/* Constraint check succeeded */

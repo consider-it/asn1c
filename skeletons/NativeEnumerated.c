@@ -137,7 +137,7 @@ NativeEnumerated_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
 	}
 
 	*native = specs->value2enum[value].nat_value;
-	ASN_DEBUG("Decoded %s = %ld", td->name, *native);
+	ASN_DEBUG("Decoded %s = %"PRIi64"", td->name, *native);
 
 	return rval;
 }
@@ -184,7 +184,7 @@ NativeEnumerated_encode_uper(const asn_TYPE_descriptor_t *td,
 	kf = bsearch(&key, specs->value2enum, specs->map_count,
 		sizeof(key), NativeEnumerated__compar_value2enum);
 	if(!kf) {
-		ASN_DEBUG("No element corresponds to %ld", native);
+		ASN_DEBUG("No element corresponds to %"PRIi64"", native);
 		ASN__ENCODE_FAILED;
 	}
 	value = kf - specs->value2enum;
@@ -215,7 +215,7 @@ NativeEnumerated_encode_uper(const asn_TYPE_descriptor_t *td,
 	/*
 	 * X.691, #10.6: normally small non-negative whole number;
 	 */
-	ASN_DEBUG("value = %ld, ext = %d, inext = %d, res = %ld",
+	ASN_DEBUG("value = %"PRIi64", ext = %d, inext = %d, res = %"PRIi64"",
 		value, specs->extension, inext,
 		value - (inext ? (specs->extension - 1) : 0));
 	if(uper_put_nsnnwn(po, value - (inext ? (specs->extension - 1) : 0)))

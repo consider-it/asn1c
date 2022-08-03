@@ -305,6 +305,7 @@
 #include <stdarg.h>
 #include <errno.h>
 #include <assert.h>
+#include <inttypes.h>
 
 #include "asn1parser.h"
 
@@ -1749,8 +1750,8 @@ yy_reduce_print (yyvsp, yyrule)
 {
   int yynrhs = yyr2[yyrule];
   int yyi;
-  unsigned long int yylno = yyrline[yyrule];
-  YYFPRINTF (stderr, "Reducing stack by rule %d (line %lu):\n",
+  uint64_t yylno = yyrline[yyrule];
+  YYFPRINTF (stderr, "Reducing stack by rule %d (line %"PRIu64"):\n",
 	     yyrule - 1, yylno);
   /* The symbols being reduced.  */
   for (yyi = 0; yyi < yynrhs; yyi++)
@@ -2230,8 +2231,8 @@ yyparse ()
       yyvsp = yyvs + yysize - 1;
 
 
-      YYDPRINTF ((stderr, "Stack size increased to %lu\n",
-		  (unsigned long int) yystacksize));
+      YYDPRINTF ((stderr, "Stack size increased to %"PRIi64"\n",
+		  (uint64_t) yystacksize));
 
       if (yyss + yystacksize - 1 <= yyssp)
 	YYABORT;

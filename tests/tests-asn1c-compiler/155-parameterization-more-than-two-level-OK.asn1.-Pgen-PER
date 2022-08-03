@@ -5,7 +5,7 @@
 
 /*** <<< TYPE-DECLS [PacketId] >>> ***/
 
-typedef long	 PacketId_t;
+typedef int64_t	 PacketId_t;
 
 /*** <<< FUNC-DECLS [PacketId] >>> ***/
 
@@ -26,7 +26,7 @@ per_type_encoder_f PacketId_encode_uper;
 int
 PacketId_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -35,7 +35,7 @@ PacketId_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= 0 && value <= 65535)) {
 		/* Constraint check succeeded */
@@ -96,7 +96,7 @@ typedef enum Color {
 
 /*** <<< TYPE-DECLS [Color] >>> ***/
 
-typedef long	 Color_t;
+typedef int64_t	 Color_t;
 
 /*** <<< FUNC-DECLS [Color] >>> ***/
 
@@ -181,7 +181,7 @@ typedef enum Valid {
 
 /*** <<< TYPE-DECLS [Valid] >>> ***/
 
-typedef long	 Valid_t;
+typedef int64_t	 Valid_t;
 
 /*** <<< FUNC-DECLS [Valid] >>> ***/
 
@@ -600,7 +600,7 @@ static const asn_ioc_set_t asn_IOS_ClassItem_1[] = {
 static int
 memb_id_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -609,7 +609,7 @@ memb_id_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= 0 && value <= 65535)) {
 		/* Constraint check succeeded */

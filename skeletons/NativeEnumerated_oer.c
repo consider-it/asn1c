@@ -11,12 +11,12 @@
 
 static long
 asn__nativeenumerated_convert(const uint8_t *b, const uint8_t *end) {
-    unsigned long value;
+    uint64_t value;
 
     /* Perform the sign initialization */
     /* Actually value = -(*b >> 7); gains nothing, yet unreadable! */
     if((*b >> 7)) {
-        value = (unsigned long)(-1);
+        value = (uint64_t)(-1);
     } else {
         value = 0;
     }

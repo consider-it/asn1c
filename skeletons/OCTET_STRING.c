@@ -108,7 +108,7 @@ asn_TYPE_descriptor_t asn_DEF_OCTET_STRING = {
 			} else {					\
 				RETURN(RC_FAIL);			\
 			}						\
-			ASN_DEBUG("Reallocating into %ld", (long)_ns);	\
+			ASN_DEBUG("Reallocating into %"PRIi64"", (int64_t)_ns);	\
 		}							\
 		memcpy(st->buf + st->size, bufptr, _bs);		\
 		/* Convenient nul-termination */			\
@@ -192,11 +192,11 @@ OCTET_STRING_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 	int tlv_constr;
 	enum asn_OS_Subvariant type_variant = specs->subvariant;
 
-	ASN_DEBUG("Decoding %s as %s (frame %ld)",
+	ASN_DEBUG("Decoding %s as %s (frame %"PRIi64")",
 		td->name,
 		(type_variant == ASN_OSUBV_STR) ?
 			"OCTET STRING" : "OS-SpecialCase",
-		(long)size);
+		(int64_t)size);
 
 	/*
 	 * Create the string if does not exist.
@@ -258,10 +258,10 @@ OCTET_STRING_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 					?size:(size_t)sel->left);
 
 
-		ASN_DEBUG("%p, s->l=%ld, s->wn=%ld, s->g=%ld\n", (void *)sel,
-			(long)(sel?sel->left:0),
-			(long)(sel?sel->want_nulls:0),
-			(long)(sel?sel->got:0)
+		ASN_DEBUG("%p, s->l=%"PRIi64", s->wn=%"PRIi64", s->g=%"PRIi64"\n", (void *)sel,
+			(int64_t)(sel?sel->left:0),
+			(int64_t)(sel?sel->want_nulls:0),
+			(int64_t)(sel?sel->got:0)
 		);
 		if(sel && sel->left <= 0 && sel->want_nulls == 0) {
 			if(sel->prev) {
@@ -283,11 +283,11 @@ OCTET_STRING_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 		}
 
 		tl = ber_fetch_tag(buf_ptr, Left, &tlv_tag);
-		ASN_DEBUG("fetch tag(size=%ld,L=%ld), %sstack, left=%ld, wn=%ld, tl=%ld",
-			(long)size, (long)Left, sel?"":"!",
-			(long)(sel?sel->left:0),
-			(long)(sel?sel->want_nulls:0),
-			(long)tl);
+		ASN_DEBUG("fetch tag(size=%"PRIi64",L=%"PRIi64"), %sstack, left=%"PRIi64", wn=%"PRIi64", tl=%"PRIi64"",
+			(int64_t)size, (int64_t)Left, sel?"":"!",
+			(int64_t)(sel?sel->left:0),
+			(int64_t)(sel?sel->want_nulls:0),
+			(int64_t)tl);
 		switch(tl) {
 		case -1: RETURN(RC_FAIL);
 		case 0: RETURN(RC_WMORE);
@@ -297,9 +297,9 @@ OCTET_STRING_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 
 		ll = ber_fetch_length(tlv_constr,
 				(const char *)buf_ptr + tl,Left - tl,&tlv_len);
-		ASN_DEBUG("Got tag=%s, tc=%d, left=%ld, tl=%ld, len=%ld, ll=%ld",
+		ASN_DEBUG("Got tag=%s, tc=%d, left=%"PRIi64", tl=%"PRIi64", len=%"PRIi64", ll=%"PRIi64"",
 			ber_tlv_tag_string(tlv_tag), tlv_constr,
-				(long)Left, (long)tl, (long)tlv_len, (long)ll);
+				(int64_t)Left, (int64_t)tl, (int64_t)tlv_len, (int64_t)ll);
 		switch(ll) {
 		case -1: RETURN(RC_FAIL);
 		case 0: RETURN(RC_WMORE);
@@ -375,8 +375,8 @@ OCTET_STRING_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 		tlvl = tl + ll;	/* Combined length of T and L encoding */
 		if((tlv_len + tlvl) < 0) {
 			/* tlv_len value is too big */
-			ASN_DEBUG("TLV encoding + length (%ld) is too big",
-				(long)tlv_len);
+			ASN_DEBUG("TLV encoding + length (%"PRIi64") is too big",
+				(int64_t)tlv_len);
 			RETURN(RC_FAIL);
 		}
 
@@ -406,8 +406,8 @@ OCTET_STRING_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 		sel->got += tlvl;
 		ADVANCE(tlvl);
 
-		ASN_DEBUG("+EXPECT2 got=%ld left=%ld, wn=%d, clvl=%u",
-			(long)sel->got, (long)sel->left,
+		ASN_DEBUG("+EXPECT2 got=%"PRIi64" left=%"PRIi64", wn=%d, clvl=%u",
+			(int64_t)sel->got, (int64_t)sel->left,
 			sel->want_nulls, sel->cont_level);
 
 	  } while(tlv_constr);
@@ -423,8 +423,8 @@ OCTET_STRING_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 	case 2:
 		stck = (struct _stack *)ctx->ptr;
 		sel = stck->cur_ptr;
-		ASN_DEBUG("Phase 2: Need %ld bytes, size=%ld, alrg=%ld, wn=%d",
-			(long)sel->left, (long)size, (long)sel->got,
+		ASN_DEBUG("Phase 2: Need %"PRIi64" bytes, size=%"PRIi64", alrg=%"PRIi64", wn=%d",
+			(int64_t)sel->left, (int64_t)size, (int64_t)sel->got,
 				sel->want_nulls);
 	    {
 		ber_tlv_len_t len;
@@ -449,8 +449,8 @@ OCTET_STRING_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 		}
 
 		if(sel->left) {
-			ASN_DEBUG("OS left %ld, size = %ld, wn=%d\n",
-				(long)sel->left, (long)size, sel->want_nulls);
+			ASN_DEBUG("OS left %"PRIi64", size = %"PRIi64", wn=%d\n",
+				(int64_t)sel->left, (int64_t)size, sel->want_nulls);
 			RETURN(RC_WMORE);
 		}
 
@@ -494,9 +494,9 @@ OCTET_STRING_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 	}
 
 	if(sel) {
-		ASN_DEBUG("3sel p=%p, wn=%d, l=%ld, g=%ld, size=%ld",
+		ASN_DEBUG("3sel p=%p, wn=%d, l=%"PRIi64", g=%"PRIi64", size=%"PRIi64"",
 			(void *)sel->prev, sel->want_nulls,
-			(long)sel->left, (long)sel->got, (long)size);
+			(int64_t)sel->left, (int64_t)sel->got, (int64_t)size);
 		if(sel->prev || sel->want_nulls > 1 || sel->left > 0) {
 			RETURN(RC_WMORE);
 		}
@@ -519,10 +519,10 @@ OCTET_STRING_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 		}
 	}
 
-	ASN_DEBUG("Took %ld bytes to encode %s: [%s]:%ld",
-		(long)consumed_myself, td->name,
+	ASN_DEBUG("Took %"PRIi64" bytes to encode %s: [%s]:%"PRIi64"",
+		(int64_t)consumed_myself, td->name,
 		(type_variant == ASN_OSUBV_STR) ? (char *)st->buf : "<data>",
-		(long)st->size);
+		(int64_t)st->size);
 
 
 	RETURN(RC_OK);
@@ -1214,14 +1214,14 @@ OCTET_STRING_decode_xer_utf8(const asn_codec_ctx_t *opt_codec_ctx,
 static int
 OCTET_STRING_per_get_characters(asn_per_data_t *po, uint8_t *buf,
 		size_t units, unsigned int bpc, unsigned int unit_bits,
-		long lb, long ub, const asn_per_constraints_t *pc) {
+		int64_t lb, int64_t ub, const asn_per_constraints_t *pc) {
 	uint8_t *end = buf + units * bpc;
 
-	ASN_DEBUG("Expanding %d characters into (%ld..%ld):%d",
+	ASN_DEBUG("Expanding %d characters into (%"PRIi64"..%"PRIi64"):%d",
 		(int)units, lb, ub, unit_bits);
 
 	/* X.691: 27.5.4 */
-	if((unsigned long)ub <= ((unsigned long)2 << (unit_bits - 1))) {
+	if((uint64_t)ub <= ((uint64_t)2 << (unit_bits - 1))) {
 		/* Decode without translation */
 		lb = 0;
 	} else if(pc && pc->code2value) {
@@ -1236,7 +1236,7 @@ OCTET_STRING_per_get_characters(asn_per_data_t *po, uint8_t *buf,
 			value = pc->code2value(code);
 			if(value < 0) {
 				ASN_DEBUG("Code %d (0x%02x) is"
-					" not in map (%ld..%ld)",
+					" not in map (%"PRIi64"..%"PRIi64")",
 					code, code, lb, ub);
 				return 1;	/* FATAL */
 			}
@@ -1260,7 +1260,7 @@ OCTET_STRING_per_get_characters(asn_per_data_t *po, uint8_t *buf,
 		int32_t ch = code + lb;
 		if(code < 0) return -1;	/* WMORE */
 		if(ch > ub) {
-			ASN_DEBUG("Code %d is out of range (%ld..%ld)",
+			ASN_DEBUG("Code %d is out of range (%"PRIi64"..%"PRIi64")",
 				ch, lb, ub);
 			return 1;	/* FATAL */
 		}
@@ -1278,14 +1278,14 @@ OCTET_STRING_per_get_characters(asn_per_data_t *po, uint8_t *buf,
 static int
 OCTET_STRING_per_put_characters(asn_per_outp_t *po, const uint8_t *buf,
 		size_t units, unsigned int bpc, unsigned int unit_bits,
-		long lb, long ub, const asn_per_constraints_t *pc) {
+		int64_t lb, int64_t ub, const asn_per_constraints_t *pc) {
 	const uint8_t *end = buf + units * bpc;
 
-	ASN_DEBUG("Squeezing %d characters into (%ld..%ld):%d (%d bpc)",
+	ASN_DEBUG("Squeezing %d characters into (%"PRIi64"..%"PRIi64"):%d (%d bpc)",
 		(int)units, lb, ub, unit_bits, bpc);
 
 	/* X.691: 27.5.4 */
-	if((unsigned long)ub <= ((unsigned long)2 << (unit_bits - 1))) {
+	if((uint64_t)ub <= ((uint64_t)2 << (unit_bits - 1))) {
 		/* Encode as is */
 		lb = 0;
 	} else if(pc && pc->value2code) {
@@ -1302,7 +1302,7 @@ OCTET_STRING_per_put_characters(asn_per_outp_t *po, const uint8_t *buf,
 			code = pc->value2code(value);
 			if(code < 0) {
 				ASN_DEBUG("Character %d (0x%02x) is"
-					" not in map (%ld..%ld)",
+					" not in map (%"PRIi64"..%"PRIi64")",
 					*buf, *buf, lb, ub);
 				return -1;
 			}
@@ -1334,7 +1334,7 @@ OCTET_STRING_per_put_characters(asn_per_outp_t *po, const uint8_t *buf,
         }
         ch = value - lb;
         if(ch < 0 || ch > ub) {
-            ASN_DEBUG("Character %d (0x%02x) is out of range (%ld..%ld)", *buf,
+            ASN_DEBUG("Character %d (0x%02x) is out of range (%"PRIi64"..%"PRIi64")", *buf,
                       value, lb, ub + lb);
             return -1;
         }
@@ -1419,7 +1419,7 @@ OCTET_STRING_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
 		if(!st) RETURN(RC_FAIL);
 	}
 
-	ASN_DEBUG("PER Decoding %s size %ld .. %ld bits %d",
+	ASN_DEBUG("PER Decoding %s size %"PRIi64" .. %"PRIi64" bits %d",
 		csiz->flags & APC_EXTENSIBLE ? "extensible" : "non-extensible",
 		csiz->lower_bound, csiz->upper_bound, csiz->effective_bits);
 
@@ -1449,14 +1449,14 @@ OCTET_STRING_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
 	if(csiz->effective_bits == 0) {
 		int ret;
 		if(bpc) {
-			ASN_DEBUG("Encoding OCTET STRING size %ld",
+			ASN_DEBUG("Encoding OCTET STRING size %"PRIi64"",
 				csiz->upper_bound);
 			ret = OCTET_STRING_per_get_characters(pd, st->buf,
 				csiz->upper_bound, bpc, unit_bits,
 				cval->lower_bound, cval->upper_bound, pc);
 			if(ret > 0) RETURN(RC_FAIL);
 		} else {
-			ASN_DEBUG("Encoding BIT STRING size %ld",
+			ASN_DEBUG("Encoding BIT STRING size %"PRIi64"",
 				csiz->upper_bound);
 			ret = per_get_many_bits(pd, st->buf, 0,
 					    unit_bits * csiz->upper_bound);
@@ -1480,8 +1480,8 @@ OCTET_STRING_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
 		if(raw_len < 0) RETURN(RC_WMORE);
 		if(raw_len == 0 && st->buf) break;
 
-		ASN_DEBUG("Got PER length eb %ld, len %ld, %s (%s)",
-			(long)csiz->effective_bits, (long)raw_len,
+		ASN_DEBUG("Got PER length eb %"PRIi64", len %"PRIi64", %s (%s)",
+			(int64_t)csiz->effective_bits, (int64_t)raw_len,
 			repeat ? "repeat" : "once", td->name);
         len_bytes = raw_len * bpc;
 		p = REALLOC(st->buf, st->size + len_bytes + 1);
@@ -1575,7 +1575,7 @@ OCTET_STRING_encode_uper(const asn_TYPE_descriptor_t *td,
 	}
 
 	ASN_DEBUG("Encoding %s into %" ASN_PRI_SIZE " units of %d bits"
-		" (%ld..%ld, effective %d)%s",
+		" (%"PRIi64"..%"PRIi64", effective %d)%s",
 		td->name, size_in_units, unit_bits,
 		csiz->lower_bound, csiz->upper_bound,
 		csiz->effective_bits, ct_extensible ? " EXT" : "");
@@ -1604,7 +1604,7 @@ OCTET_STRING_encode_uper(const asn_TYPE_descriptor_t *td,
 	}
 
     if(csiz->effective_bits >= 0 && !inext) {
-        ASN_DEBUG("Encoding %" ASN_PRI_SIZE " bytes (%ld), length in %d bits", st->size,
+        ASN_DEBUG("Encoding %" ASN_PRI_SIZE " bytes (%"PRIi64"), length in %d bits", st->size,
                   size_in_units - csiz->lower_bound, csiz->effective_bits);
         ret = per_put_few_bits(po, size_in_units - csiz->lower_bound,
                                csiz->effective_bits);
@@ -1854,7 +1854,7 @@ OCTET_STRING_compare(const asn_TYPE_descriptor_t *td, const void *aptr,
  * Biased function for randomizing character values around their limits.
  */
 static uint32_t
-OCTET_STRING__random_char(unsigned long lb, unsigned long ub) {
+OCTET_STRING__random_char(uint64_t lb, uint64_t ub) {
     assert(lb <= ub);
     switch(asn_random_between(0, 16)) {
     case 0:
@@ -1891,7 +1891,7 @@ OCTET_STRING_random_length_constrained(
     if(constraints->per_constraints) {
         const asn_per_constraint_t *pc = &constraints->per_constraints->size;
         if(pc->flags & APC_CONSTRAINED) {
-            long suggested_upper_bound = pc->upper_bound < (ssize_t)max_length
+            int64_t suggested_upper_bound = pc->upper_bound < (ssize_t)max_length
                                              ? pc->upper_bound
                                              : (ssize_t)max_length;
             if(max_length <= (size_t)pc->lower_bound) {
@@ -1943,8 +1943,8 @@ OCTET_STRING_random_fill(const asn_TYPE_descriptor_t *td, void **sptr,
     asn_random_fill_result_t result_failed = {ARFILL_FAILED, 0};
     asn_random_fill_result_t result_skipped = {ARFILL_SKIPPED, 0};
     unsigned int unit_bytes = 1;
-    unsigned long clb = 0;  /* Lower bound on char */
-    unsigned long cub = 255;  /* Higher bound on char value */
+    uint64_t clb = 0;  /* Lower bound on char */
+    uint64_t cub = 255;  /* Higher bound on char value */
     uint8_t *buf;
     uint8_t *bend;
     uint8_t *b;

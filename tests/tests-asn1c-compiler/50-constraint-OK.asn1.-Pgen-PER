@@ -5,7 +5,7 @@
 
 /*** <<< TYPE-DECLS [Int1] >>> ***/
 
-typedef long	 Int1_t;
+typedef int64_t	 Int1_t;
 
 /*** <<< FUNC-DECLS [Int1] >>> ***/
 
@@ -75,7 +75,7 @@ per_type_encoder_f Int2_encode_uper;
 int
 Int2_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	unsigned long value;
+	uint64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -84,7 +84,7 @@ Int2_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if(1 /* No applicable constraints whatsoever */) {
 		(void)value; /* Unused variable */
@@ -155,7 +155,7 @@ per_type_encoder_f Int3_encode_uper;
 int
 Int3_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -164,7 +164,7 @@ Int3_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= 0 && value <= 10)) {
 		/* Constraint check succeeded */
@@ -238,7 +238,7 @@ per_type_encoder_f Int4_encode_uper;
 int
 Int4_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -247,7 +247,7 @@ Int4_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= 1 && value <= 10)) {
 		/* Constraint check succeeded */
@@ -321,7 +321,7 @@ per_type_encoder_f Int5_encode_uper;
 int
 Int5_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -330,7 +330,7 @@ Int5_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value == 5)) {
 		/* Constraint check succeeded */
@@ -383,7 +383,7 @@ asn_TYPE_descriptor_t asn_DEF_Int5 = {
 
 /*** <<< TYPE-DECLS [ExtensibleExtensions] >>> ***/
 
-typedef long	 ExtensibleExtensions_t;
+typedef int64_t	 ExtensibleExtensions_t;
 
 /*** <<< FUNC-DECLS [ExtensibleExtensions] >>> ***/
 
@@ -403,7 +403,7 @@ per_type_encoder_f ExtensibleExtensions_encode_uper;
 int
 ExtensibleExtensions_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -412,7 +412,7 @@ ExtensibleExtensions_constraint(const asn_TYPE_descriptor_t *td, const void *spt
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= 1 && value <= 255)) {
 		/* Constraint check succeeded */
@@ -2130,7 +2130,7 @@ typedef struct Sequence {
 	Int4_t	 int4;
 	Int4_t	 int4_c;
 	BOOLEAN_t	*Bool	/* DEFAULT 1 */;
-	long	 enum_c;
+	int64_t	 enum_c;
 	NULL_t	*null	/* OPTIONAL */;
 	/*
 	 * This type is extensible,
@@ -2158,7 +2158,7 @@ extern asn_TYPE_member_t asn_MBR_Sequence_1[7];
 static int
 memb_int1_c_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -2167,7 +2167,7 @@ memb_int1_c_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= -2)) {
 		/* Constraint check succeeded */
@@ -2183,7 +2183,7 @@ memb_int1_c_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 static int
 memb_int4_c_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -2192,7 +2192,7 @@ memb_int4_c_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= 5 && value <= 7)) {
 		/* Constraint check succeeded */
@@ -2208,7 +2208,7 @@ memb_int4_c_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 static int
 memb_int5_c_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -2217,7 +2217,7 @@ memb_int5_c_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value == 5)) {
 		/* Constraint check succeeded */
@@ -2531,7 +2531,7 @@ typedef enum Enum0 {
 
 /*** <<< TYPE-DECLS [Enum0] >>> ***/
 
-typedef long	 Enum0_t;
+typedef int64_t	 Enum0_t;
 
 /*** <<< FUNC-DECLS [Enum0] >>> ***/
 
@@ -2612,7 +2612,7 @@ typedef enum Enum1 {
 
 /*** <<< TYPE-DECLS [Enum1] >>> ***/
 
-typedef long	 Enum1_t;
+typedef int64_t	 Enum1_t;
 
 /*** <<< FUNC-DECLS [Enum1] >>> ***/
 
@@ -2632,7 +2632,7 @@ per_type_encoder_f Enum1_encode_uper;
 int
 Enum1_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -2641,7 +2641,7 @@ Enum1_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value == 0)) {
 		/* Constraint check succeeded */

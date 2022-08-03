@@ -6,6 +6,7 @@
 #include <limits.h>
 #include <assert.h>
 #include <errno.h>
+#include <inttypes.h>
 
 #include "asn1p_integer.h"
 
@@ -112,8 +113,8 @@ const char *asn1p_itoa(asn1c_integer_t v) {
 int asn1p_itoa_s(char *buf, size_t size, asn1c_integer_t v) {
     char tmp_buf[128];
 
-    if(v >= LONG_MIN && v < LONG_MAX) {
-        int ret = snprintf(buf, size, "%ld", (long)v);
+    if(v >= INT64_MIN && v < INT64_MAX) {
+        int ret = snprintf(buf, size, "%"PRIi64, (int64_t)v);
         if(ret < 0 || (size_t)ret >= size) {
             return -1;
         }
@@ -145,7 +146,7 @@ int asn1p_itoa_s(char *buf, size_t size, asn1c_integer_t v) {
 
     assert(v > 1000000000L);
     char restbuf[10] = "000000000\0";
-    const char *rest = asn1p_itoa((long)(v % 1000000000L));
+    const char *rest = asn1p_itoa((int64_t)(v % 1000000000L));
     size_t restlen = strlen(rest);
     assert(restlen <= 9);
     memcpy(restbuf + (9 - restlen), rest, restlen);

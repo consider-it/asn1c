@@ -31,11 +31,11 @@ const char *asn1c_type_name(arg_t *arg, asn1p_expr_t *expr, enum tnfmt _format);
 
 /*
  * Check whether the specified INTEGER or ENUMERATED type can be represented
- * using the generic 'long' type.
+ * using the generic 'int64_t' type.
  * Return values:
- * 	FL_NOTFIT:	No, it cannot be represented using long.
- * 	FL_FITS_SIGNED:	It can be represented using signed long.
- * 	FL_FITS_UNSIGN:	It can be represented using unsigned long.
+ * 	FL_NOTFIT:	No, it cannot be represented using int64_t.
+ * 	FL_FITS_SIGNED:	It can be represented using signed int64_t.
+ * 	FL_FITS_UNSIGN:	It can be represented using uint64_t.
  * 	FL_PRESUMED:	Probably can't, but -fwide-types is not in effect.
  */
 enum asn1c_fitslong_e {

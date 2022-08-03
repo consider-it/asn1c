@@ -46,13 +46,13 @@
 static int single_type_decoding = 0;   /* -1 enables that */
 static int minimalistic = 0;           /* -m enables that */
 static int pretty_printing = 1;        /* -p disables that */
-static long skip_bytes = 0;            /* -s controls that */
+static int64_t skip_bytes = 0;            /* -s controls that */
 static char indent_bytes[16] = "    "; /* -i controls that */
 
 void set_minimalistic_output(int v) { minimalistic = v; }
 void set_single_type_decoding(int v) { single_type_decoding = v; }
 void set_pretty_printing(int v) { pretty_printing = v; }
-int set_skip_bytes(long v) { if(v < 0) return -1; skip_bytes = v; return 0; }
+int set_skip_bytes(int64_t v) { if(v < 0) return -1; skip_bytes = v; return 0; }
 int set_indent_size(int indent_size) {
     if(indent_size < 0 || indent_size >= (int)sizeof(indent_bytes)) {
         return -1;
@@ -110,7 +110,7 @@ unber_stream(const char *fname, input_stream_t *ibs, output_stream_t *os) {
         if(ibs_getc(ibs) == -1) {
             osprintfError(os,
                           "%s: input source has less data "
-                          "than \"-s %ld\" switch wants to skip\n",
+                          "than \"-s %"PRIi64"\" switch wants to skip\n",
                           fname, skip_bytes);
             return -1;
         }
@@ -235,9 +235,9 @@ process_deeper(const char *fname, input_stream_t *ibs, output_stream_t *os,
 
             if(tlv_len > limit) {
                 osprintfError(os,
-                              "%s: Structure advertizes length (%ld) "
-                              "greater than of a parent container (%ld)\n",
-                              fname, (long)tlv_len, (long)limit);
+                              "%s: Structure advertizes length (%"PRIi64") "
+                              "greater than of a parent container (%"PRIi64")\n",
+                              fname, (int64_t)tlv_len, (int64_t)limit);
                 return PD_FAILED;
             }
         }
@@ -323,12 +323,12 @@ print_TL(output_stream_t *os, int fin, off_t offset, int level, int constr,
     osprintf(os, " T=\"%s\"", ber_tlv_tag_string(tlv_tag));
 
     if(!fin || (tlv_len == -1 && !minimalistic))
-        osprintf(os, " TL=\"%ld\"", (long)tlen);
+        osprintf(os, " TL=\"%"PRIi64"\"", (int64_t)tlen);
     if(!fin) {
         if(tlv_len == -1)
             osprintf(os, " V=\"Indefinite\"");
         else
-            osprintf(os, " V=\"%ld\"", (long)tlv_len);
+            osprintf(os, " V=\"%"PRIi64"\"", (int64_t)tlv_len);
     }
 
     if(!minimalistic && BER_TAG_CLASS(tlv_tag) == ASN_TAG_CLASS_UNIVERSAL) {
@@ -340,7 +340,7 @@ print_TL(output_stream_t *os, int fin, off_t offset, int level, int constr,
 
     if(fin) {
         if(constr && !minimalistic) {
-            osprintf(os, " L=\"%ld\"", (long)effective_size);
+            osprintf(os, " L=\"%"PRIi64"\"", (int64_t)effective_size);
         }
         osprintf(os, ">\n");
     }
@@ -748,7 +748,7 @@ decode_tlv_from_hex_string(const char *datastring) {
             if(tlv_len == (ber_tlv_len_t)-1)
                 printf("LEN: Indefinite length encoding\n");
             else
-                printf("LEN: %ld bytes\n", (long)tlv_len);
+                printf("LEN: %"PRIi64" bytes\n", (int64_t)tlv_len);
         }
     }
 

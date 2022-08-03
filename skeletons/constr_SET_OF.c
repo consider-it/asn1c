@@ -126,8 +126,8 @@ SET_OF_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 			ctx->left += rval.consumed; /* ?Substracted below! */
 		ADVANCE(rval.consumed);
 
-		ASN_DEBUG("Structure consumes %ld bytes, "
-			"buffer %ld", (long)ctx->left, (long)size);
+		ASN_DEBUG("Structure consumes %"PRIi64" bytes, "
+			"buffer %"PRIi64"", (int64_t)ctx->left, (int64_t)size);
 
 		NEXT_PHASE(ctx);
 		/* Fall through */
@@ -945,8 +945,8 @@ SET_OF_decode_uper(const asn_codec_ctx_t *opt_codec_ctx,
 	if(ct && ct->effective_bits >= 0) {
 		/* X.691, #19.5: No length determinant */
 		nelems = per_get_few_bits(pd, ct->effective_bits);
-		ASN_DEBUG("Preparing to fetch %ld+%ld elements from %s",
-			(long)nelems, ct->lower_bound, td->name);
+		ASN_DEBUG("Preparing to fetch %"PRIi64"+%"PRIi64" elements from %s",
+			(int64_t)nelems, ct->lower_bound, td->name);
 		if(nelems < 0)  ASN__DECODE_STARVED;
 		nelems += ct->lower_bound;
 	} else {
@@ -1027,7 +1027,7 @@ SET_OF_encode_uper(const asn_TYPE_descriptor_t *td,
     if(ct) {
         int not_in_root =
             (list->count < ct->lower_bound || list->count > ct->upper_bound);
-        ASN_DEBUG("lb %ld ub %ld %s", ct->lower_bound, ct->upper_bound,
+        ASN_DEBUG("lb %"PRIi64" ub %"PRIi64" %s", ct->lower_bound, ct->upper_bound,
                   ct->flags & APC_EXTENSIBLE ? "ext" : "fix");
         if(ct->flags & APC_EXTENSIBLE) {
             /* Declare whether size is in extension root */
@@ -1218,9 +1218,9 @@ SET_OF_random_fill(const asn_TYPE_descriptor_t *td, void **sptr,
     asn_random_fill_result_t result_skipped = {ARFILL_SKIPPED, 0};
     const asn_TYPE_member_t *elm = td->elements;
     void *st = *sptr;
-    long max_elements = 5;
-    long slb = 0;   /* Lower size bound */
-    long sub = 0;   /* Upper size bound */
+    int64_t max_elements = 5;
+    int64_t slb = 0;   /* Lower size bound */
+    int64_t sub = 0;   /* Upper size bound */
     size_t rnd_len;
 
     if(max_length == 0) return result_skipped;

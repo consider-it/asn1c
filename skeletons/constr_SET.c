@@ -160,8 +160,8 @@ SET_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 
 		NEXT_PHASE(ctx);
 
-		ASN_DEBUG("Structure advertised %ld bytes, "
-			"buffer contains %ld", (long)ctx->left, (long)size);
+		ASN_DEBUG("Structure advertised %"PRIi64" bytes, "
+			"buffer contains %"PRIi64"", (int64_t)ctx->left, (int64_t)size);
 
 		/* Fall through */
 	case 1:
@@ -323,8 +323,8 @@ SET_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 		/* Fall through */
 	case 3:
 	case 4:	/* Only 00 is expected */
-		ASN_DEBUG("SET %s Leftover: %ld, size = %ld",
-			td->name, (long)ctx->left, (long)size);
+		ASN_DEBUG("SET %s Leftover: %"PRIi64", size = %"PRIi64"",
+			td->name, (int64_t)ctx->left, (int64_t)size);
 
 		/*
 		 * Skip everything until the end of the SET.

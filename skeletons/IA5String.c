@@ -72,10 +72,10 @@ IA5String_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		for(; buf < end; buf++) {
 			if(*buf > 0x7F) {
 				ASN__CTFAIL(app_key, td, sptr,
-					"%s: value byte %ld out of range: "
+					"%s: value byte %"PRIi64" out of range: "
 					"%d > 127 (%s:%d)",
 					td->name,
-					(long)((buf - st->buf) + 1),
+					(int64_t)((buf - st->buf) + 1),
 					*buf,
 					__FILE__, __LINE__);
 				return -1;

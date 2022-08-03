@@ -555,7 +555,7 @@ typedef enum accept_as {
 /*** <<< TYPE-DECLS [ActionItem] >>> ***/
 
 typedef struct ActionItem {
-	long	 accept_as;
+	int64_t	 accept_as;
 	struct notify {
 		BOOLEAN_t	 critical;
 		struct email {

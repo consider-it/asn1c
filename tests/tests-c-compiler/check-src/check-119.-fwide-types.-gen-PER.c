@@ -165,7 +165,7 @@ load_object_from(const char *fname, enum expectation expectation, unsigned char 
 					st = 0;
 					ASN_DEBUG("-> PER wants more");
 				} else {
-					ASN_DEBUG("-> PER ret %d/%ld",
+					ASN_DEBUG("-> PER ret %d/%"PRIi64"",
 						rval.code, rval.consumed);
 					/* uper_decode() returns _bits_ */
 					rval.consumed += 7;

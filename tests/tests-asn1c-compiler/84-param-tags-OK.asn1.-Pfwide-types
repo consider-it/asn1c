@@ -8,7 +8,7 @@
 /*** <<< TYPE-DECLS [TestType] >>> ***/
 
 typedef struct TestType_16P0 {
-	long	 common	/* DEFAULT 0 */;
+	int64_t	 common	/* DEFAULT 0 */;
 	
 	/* Context for parsing across buffer boundaries */
 	asn_struct_ctx_t _asn_ctx;
@@ -34,7 +34,7 @@ extern asn_TYPE_member_t asn_MBR_TestType_16P1_3[1];
 static int
 memb_common_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -43,7 +43,7 @@ memb_common_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= 1 && value <= 10)) {
 		/* Constraint check succeeded */
@@ -60,7 +60,7 @@ memb_common_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 /*** <<< STAT-DEFS [TestType] >>> ***/
 
 static int asn_DFL_2_cmp_0(const void *sptr) {
-	const long *st = sptr;
+	const int64_t *st = sptr;
 	
 	if(!st) {
 		return -1; /* No value is not a default value */
@@ -70,7 +70,7 @@ static int asn_DFL_2_cmp_0(const void *sptr) {
 	return (*st != 0);
 }
 static int asn_DFL_2_set_0(void **sptr) {
-	long *st = *sptr;
+	int64_t *st = *sptr;
 	
 	if(!st) {
 		st = (*sptr = CALLOC(1, sizeof(*st)));
@@ -278,7 +278,7 @@ asn_TYPE_descriptor_t asn_DEF_TestChoice = {
 /*** <<< TYPE-DECLS [AutoType] >>> ***/
 
 typedef struct AutoType_34P0 {
-	long	 common;
+	int64_t	 common;
 	
 	/* Context for parsing across buffer boundaries */
 	asn_struct_ctx_t _asn_ctx;
@@ -304,7 +304,7 @@ extern asn_TYPE_member_t asn_MBR_AutoType_34P1_3[1];
 static int
 memb_common_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -313,7 +313,7 @@ memb_common_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value == 0)) {
 		/* Constraint check succeeded */
@@ -338,7 +338,7 @@ memb_common_constraint_3(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = (*(const long *)sptr) ? 1 : 0;
+	value = (*(const int64_t *)sptr) ? 1 : 0;
 	
 	if((value <= 0)) {
 		/* Constraint check succeeded */

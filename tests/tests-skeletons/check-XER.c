@@ -26,9 +26,9 @@ check_next(char *xerbuf, int expected_chunk_size, pxer_chunk_type_e expected_chu
 	ch_size = xer_next_token(&state, xerbuf, xerbuf_len, &ch_type);
 
 	printf("[%s]:%d\n", xerbuf, xerbuf_len);
-	printf("chunk sizes: %ld vs %ld, chunk types: %d vs %ld\n",
-		(long)ch_size, (long)expected_chunk_size,
-		ch_type, (long)expected_chunk_type
+	printf("chunk sizes: %"PRIi64" vs %"PRIi64", chunk types: %d vs %"PRIi64"\n",
+		(int64_t)ch_size, (int64_t)expected_chunk_size,
+		ch_type, (int64_t)expected_chunk_type
 	);
 
 	if(expected_chunk_type == PXER_WMORE) {

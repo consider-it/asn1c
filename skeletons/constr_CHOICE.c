@@ -172,8 +172,8 @@ CHOICE_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 
 		NEXT_PHASE(ctx);
 
-		ASN_DEBUG("Structure consumes %ld bytes, buffer %ld",
-			(long)ctx->left, (long)size);
+		ASN_DEBUG("Structure consumes %"PRIi64" bytes, buffer %"PRIi64"",
+			(int64_t)ctx->left, (int64_t)size);
 
 		/* Fall through */
 	case 1:
@@ -287,8 +287,8 @@ CHOICE_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 
 		/* Fall through */
 	case 3:
-		ASN_DEBUG("CHOICE %s Leftover: %ld, size = %ld, tm=%d, tc=%d",
-			td->name, (long)ctx->left, (long)size,
+		ASN_DEBUG("CHOICE %s Leftover: %"PRIi64", size = %"PRIi64", tm=%d, tc=%d",
+			td->name, (int64_t)ctx->left, (int64_t)size,
 			tag_mode, td->tags_count);
 
 		if(ctx->left > 0) {
@@ -443,8 +443,8 @@ CHOICE_encode_der(const asn_TYPE_descriptor_t *td, const void *sptr,
 	if(erval.encoded == -1)
 		return erval;
 
-	ASN_DEBUG("Encoded CHOICE member in %ld bytes (+%ld)",
-		(long)erval.encoded, (long)computed_size);
+	ASN_DEBUG("Encoded CHOICE member in %"PRIi64" bytes (+%"PRIi64")",
+		(int64_t)erval.encoded, (int64_t)computed_size);
 
 	erval.encoded += computed_size;
 
@@ -669,8 +669,8 @@ CHOICE_decode_xer(const asn_codec_ctx_t *opt_codec_ctx,
 
 		/* Skip the extensions section */
 		if(ctx->phase == 4) {
-			ASN_DEBUG("skip_unknown(%d, %ld)",
-				tcv, (long)ctx->left);
+			ASN_DEBUG("skip_unknown(%d, %"PRIi64")",
+				tcv, (int64_t)ctx->left);
 			switch(xer_skip_unknown(tcv, &ctx->left)) {
 			case -1:
 				ctx->phase = 5;
@@ -960,7 +960,7 @@ CHOICE_encode_uper(const asn_TYPE_descriptor_t *td,
 		|| present_enc > ct->upper_bound) {
 			if(ct->flags & APC_EXTENSIBLE) {
                 ASN_DEBUG(
-                    "CHOICE member %d (enc %d) is an extension (%ld..%ld)",
+                    "CHOICE member %d (enc %d) is an extension (%"PRIi64"..%"PRIi64")",
                     present, present_enc, ct->lower_bound, ct->upper_bound);
                 if(per_put_few_bits(po, 1, 1))
 					ASN__ENCODE_FAILED;
@@ -971,7 +971,7 @@ CHOICE_encode_uper(const asn_TYPE_descriptor_t *td,
 		}
 	}
 	if(ct && ct->flags & APC_EXTENSIBLE) {
-        ASN_DEBUG("CHOICE member %d (enc %d) is not an extension (%ld..%ld)",
+        ASN_DEBUG("CHOICE member %d (enc %d) is not an extension (%"PRIi64"..%"PRIi64")",
                   present, present_enc, ct->lower_bound, ct->upper_bound);
         if(per_put_few_bits(po, 0, 1))
 			ASN__ENCODE_FAILED;

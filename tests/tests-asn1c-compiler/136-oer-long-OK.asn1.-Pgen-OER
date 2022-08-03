@@ -8,21 +8,21 @@
 /*** <<< TYPE-DECLS [T] >>> ***/
 
 typedef struct T {
-	long	 unsigned8;
-	long	 unsigned16;
-	long	 unsigned16stack;
-	long	 unsigned16stack_ext;
+	int64_t	 unsigned8;
+	int64_t	 unsigned16;
+	int64_t	 unsigned16stack;
+	int64_t	 unsigned16stack_ext;
 	INTEGER_t	 unsigned33;
-	long	*minmax	/* OPTIONAL */;
+	int64_t	*minmax	/* OPTIONAL */;
 	/*
 	 * This type is extensible,
 	 * possible extensions are below.
 	 */
-	long	*signed8	/* DEFAULT 3 */;
-	long	*signed16;
-	long	*signed16stack;
-	long	*signed16stack_ext;
-	long	*signed32;
+	int64_t	*signed8	/* DEFAULT 3 */;
+	int64_t	*signed16;
+	int64_t	*signed16stack;
+	int64_t	*signed16stack_ext;
+	int64_t	*signed32;
 	INTEGER_t	*signed33ext;
 	
 	/* Context for parsing across buffer boundaries */
@@ -38,7 +38,7 @@ extern asn_TYPE_descriptor_t asn_DEF_T;
 static int
 memb_unsigned8_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -47,7 +47,7 @@ memb_unsigned8_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= 0 && value <= 255)) {
 		/* Constraint check succeeded */
@@ -63,7 +63,7 @@ memb_unsigned8_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 static int
 memb_unsigned16_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -72,7 +72,7 @@ memb_unsigned16_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= 0 && value <= 65535)) {
 		/* Constraint check succeeded */
@@ -88,7 +88,7 @@ memb_unsigned16_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 static int
 memb_unsigned16stack_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -97,7 +97,7 @@ memb_unsigned16stack_constraint_1(const asn_TYPE_descriptor_t *td, const void *s
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= 0 && value <= 255)) {
 		/* Constraint check succeeded */
@@ -113,7 +113,7 @@ memb_unsigned16stack_constraint_1(const asn_TYPE_descriptor_t *td, const void *s
 static int
 memb_unsigned16stack_ext_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -122,7 +122,7 @@ memb_unsigned16stack_ext_constraint_1(const asn_TYPE_descriptor_t *td, const voi
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= 0 && value <= 255)) {
 		/* Constraint check succeeded */
@@ -139,7 +139,7 @@ static int
 memb_unsigned33_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
 	const INTEGER_t *st = (const INTEGER_t *)sptr;
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -188,7 +188,7 @@ memb_minmax_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 static int
 memb_signed8_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -197,7 +197,7 @@ memb_signed8_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= -128 && value <= 127)) {
 		/* Constraint check succeeded */
@@ -213,7 +213,7 @@ memb_signed8_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 static int
 memb_signed16_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -222,7 +222,7 @@ memb_signed16_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= -32768 && value <= 32767)) {
 		/* Constraint check succeeded */
@@ -238,7 +238,7 @@ memb_signed16_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 static int
 memb_signed16stack_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -247,7 +247,7 @@ memb_signed16stack_constraint_1(const asn_TYPE_descriptor_t *td, const void *spt
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= -128 && value <= 127)) {
 		/* Constraint check succeeded */
@@ -263,7 +263,7 @@ memb_signed16stack_constraint_1(const asn_TYPE_descriptor_t *td, const void *spt
 static int
 memb_signed16stack_ext_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -272,7 +272,7 @@ memb_signed16stack_ext_constraint_1(const asn_TYPE_descriptor_t *td, const void 
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= -128 && value <= 127)) {
 		/* Constraint check succeeded */
@@ -288,7 +288,7 @@ memb_signed16stack_ext_constraint_1(const asn_TYPE_descriptor_t *td, const void 
 static int
 memb_signed32_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -297,7 +297,7 @@ memb_signed32_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value >= -2000000000 && value <= 2000000000)) {
 		/* Constraint check succeeded */
@@ -314,7 +314,7 @@ static int
 memb_signed33ext_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
 	const INTEGER_t *st = (const INTEGER_t *)sptr;
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -384,7 +384,7 @@ static asn_oer_constraints_t asn_OER_memb_signed33ext_constr_14 CC_NOTUSED = {
 /*** <<< STAT-DEFS [T] >>> ***/
 
 static int asn_DFL_9_cmp_3(const void *sptr) {
-	const long *st = sptr;
+	const int64_t *st = sptr;
 	
 	if(!st) {
 		return -1; /* No value is not a default value */
@@ -394,7 +394,7 @@ static int asn_DFL_9_cmp_3(const void *sptr) {
 	return (*st != 3);
 }
 static int asn_DFL_9_set_3(void **sptr) {
-	long *st = *sptr;
+	int64_t *st = *sptr;
 	
 	if(!st) {
 		st = (*sptr = CALLOC(1, sizeof(*st)));

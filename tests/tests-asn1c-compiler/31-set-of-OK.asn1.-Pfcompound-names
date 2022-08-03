@@ -73,8 +73,8 @@ asn_TYPE_descriptor_t asn_DEF_Forest = {
 /*** <<< TYPE-DECLS [Tree] >>> ***/
 
 typedef struct Tree {
-	long	 height;
-	long	 width;
+	int64_t	 height;
+	int64_t	 width;
 	
 	/* Context for parsing across buffer boundaries */
 	asn_struct_ctx_t _asn_ctx;
@@ -206,8 +206,8 @@ typedef struct Stuff {
 	struct Stuff__other {
 		Stuff__other_PR present;
 		union Stuff__other_u {
-			long	 a;
-			long	 b;
+			int64_t	 a;
+			int64_t	 b;
 		} choice;
 		
 		/* Context for parsing across buffer boundaries */

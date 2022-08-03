@@ -334,7 +334,7 @@ asn_encode_internal(const asn_codec_ctx_t *opt_codec_ctx,
                     errno = ENOENT; /* UPER is not defined for this type. */
                 }
             } else {
-                ASN_DEBUG("Complete encoded in %ld bits", (long)er.encoded);
+                ASN_DEBUG("Complete encoded in %"PRIi64" bits", (int64_t)er.encoded);
                 if(er.encoded == 0) {
                     /* Enforce "Complete Encoding" of X.691 #11.1 */
                     if(callback("\0", 1, callback_key) < 0) {

@@ -108,8 +108,8 @@ BOOLEAN_decode_ber(const asn_codec_ctx_t *opt_codec_ctx,
 	rval.code = RC_OK;
 	rval.consumed += length;
 
-	ASN_DEBUG("Took %ld/%ld bytes to encode %s, value=%d",
-		(long)rval.consumed, (long)length,
+	ASN_DEBUG("Took %"PRIi64"/%"PRIi64" bytes to encode %s, value=%d",
+		(int64_t)rval.consumed, (int64_t)length,
 		td->name, *st);
 	
 	return rval;

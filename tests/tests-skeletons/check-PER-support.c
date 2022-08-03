@@ -90,17 +90,17 @@ check_round_trips() {
 #define NO_UNREBASE(w, l, u) check_unrebase(__LINE__, 1, w, l, u, 0)
 
 static void
-check_unrebase(int lineno, int expected_to_fail, unsigned long wire_value,
-               long lb, long ub, long control) {
-    fprintf(stderr, "%03d: Checking recovery of %lu (%ld..%ld)", lineno,
+check_unrebase(int lineno, int expected_to_fail, uint64_t wire_value,
+               int64_t lb, int64_t ub, int64_t control) {
+    fprintf(stderr, "%03d: Checking recovery of %"PRIu64" (%"PRIi64"..%"PRIi64")", lineno,
             wire_value, lb, ub);
     if(expected_to_fail) {
         fprintf(stderr, " to FAIL\n");
     } else {
-        fprintf(stderr, " into %ld\n", control);
+        fprintf(stderr, " into %"PRIi64"\n", control);
     }
 
-    long outcome;
+    int64_t outcome;
     int ret = per_long_range_unrebase(wire_value, lb, ub, &outcome);
     if(ret == 0) {
         assert(!expected_to_fail);
@@ -120,12 +120,12 @@ check_unrebase(int lineno, int expected_to_fail, unsigned long wire_value,
     check_range_rebase_round_trip(__LINE__, 1, v, l, u)
 
 static void
-check_range_rebase_round_trip(int lineno, int expected_to_fail, long value,
-                              long lb, long ub) {
-    unsigned long wire_value;
+check_range_rebase_round_trip(int lineno, int expected_to_fail, int64_t value,
+                              int64_t lb, int64_t ub) {
+    uint64_t wire_value;
     int ret;
 
-    fprintf(stderr, "%03d: Rebase %ld into (%ld..%ld) %s\n", lineno, value, lb,
+    fprintf(stderr, "%03d: Rebase %"PRIi64" into (%"PRIi64"..%"PRIi64") %s\n", lineno, value, lb,
             ub, expected_to_fail ? "FAIL" : "OK");
 
     ret = per_long_range_rebase(value, lb, ub, &wire_value);
@@ -133,32 +133,32 @@ check_range_rebase_round_trip(int lineno, int expected_to_fail, long value,
         if(expected_to_fail) {
             return;
         } else {
-            fprintf(stderr, "%03d: Original %ld (%ld..%ld) failed to rebase\n",
+            fprintf(stderr, "%03d: Original %"PRIi64" (%"PRIi64"..%"PRIi64") failed to rebase\n",
                     lineno, value, lb, ub);
             assert(ret == 0);
         }
     } if(expected_to_fail) {
         fprintf(
             stderr,
-            "%03d: Original %ld (%ld..%ld) rebased to %lu where it shouldn't\n",
+            "%03d: Original %"PRIi64" (%"PRIi64"..%"PRIi64") rebased to %"PRIu64" where it shouldn't\n",
             lineno, value, lb, ub, wire_value);
         assert(expected_to_fail && ret == -1);
     }
 
-    fprintf(stderr, "%03d: Recover %lu into (%ld..%ld)\n", lineno,
+    fprintf(stderr, "%03d: Recover %"PRIu64" into (%"PRIi64"..%"PRIi64")\n", lineno,
             wire_value, lb, ub);
 
-    long recovered;
+    int64_t recovered;
     ret = per_long_range_unrebase(wire_value, lb, ub, &recovered);
     if(ret != 0) {
-        fprintf(stderr, "%03d: Wire value %lu (%ld..%ld) failed to unrebase\n",
+        fprintf(stderr, "%03d: Wire value %"PRIu64" (%"PRIi64"..%"PRIi64") failed to unrebase\n",
                 lineno, wire_value, lb, ub);
         assert(ret == 0);
     }
 
     if(value != recovered) {
         fprintf(stderr,
-                "%03d: Value %ld (%ld..%ld) failed to round-trip (=%ld)\n",
+                "%03d: Value %"PRIi64" (%"PRIi64"..%"PRIi64") failed to round-trip (=%"PRIi64")\n",
                 lineno, value, lb, ub, recovered);
         assert(value == recovered);
     }

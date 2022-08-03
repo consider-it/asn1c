@@ -19,7 +19,7 @@ extern asn_TYPE_operation_t asn_OP_INTEGER;
 
 /* Map with <tag> to integer value association */
 typedef struct asn_INTEGER_enum_map_s {
-	long		 nat_value;	/* associated native integer value */
+	int64_t		 nat_value;	/* associated native integer value */
 	size_t		 enum_len;	/* strlen("tag") */
 	const char	*enum_name;	/* "tag" */
 } asn_INTEGER_enum_map_t;
@@ -58,7 +58,7 @@ asn_random_fill_f  INTEGER_random_fill;
  * (l_size) is in bytes.
  * Returns 0 if it was possible to convert, -1 otherwise.
  * -1/EINVAL: Mandatory argument missing
- * -1/ERANGE: Value encoded is out of range for long representation
+ * -1/ERANGE: Value encoded is out of range for int64_t representation
  * -1/ENOMEM: Memory allocation failed (in asn_*2INTEGER()).
  */
 int asn_INTEGER2imax(const INTEGER_t *i, intmax_t *l);
@@ -69,10 +69,10 @@ int asn_umax2INTEGER(INTEGER_t *i, uintmax_t l);
 /*
  * Size-specific conversion helpers.
  */
-int asn_INTEGER2long(const INTEGER_t *i, long *l);
-int asn_INTEGER2ulong(const INTEGER_t *i, unsigned long *l);
-int asn_long2INTEGER(INTEGER_t *i, long l);
-int asn_ulong2INTEGER(INTEGER_t *i, unsigned long l);
+int asn_INTEGER2long(const INTEGER_t *i, int64_t *l);
+int asn_INTEGER2ulong(const INTEGER_t *i, uint64_t *l);
+int asn_long2INTEGER(INTEGER_t *i, int64_t l);
+int asn_ulong2INTEGER(INTEGER_t *i, uint64_t l);
 
 /* A version of strtol/strtoimax(3) with nicer error reporting. */
 enum asn_strtox_result_e {
@@ -83,9 +83,9 @@ enum asn_strtox_result_e {
     ASN_STRTOX_EXTRA_DATA  =  1   /* Conversion succeded, but the string has extra stuff */
 };
 enum asn_strtox_result_e asn_strtol_lim(const char *str, const char **end,
-                                        long *l);
+                                        int64_t *l);
 enum asn_strtox_result_e asn_strtoul_lim(const char *str, const char **end,
-                                         unsigned long *l);
+                                         uint64_t *l);
 enum asn_strtox_result_e asn_strtoimax_lim(const char *str, const char **end,
                                            intmax_t *l);
 enum asn_strtox_result_e asn_strtoumax_lim(const char *str, const char **end,
@@ -95,7 +95,7 @@ enum asn_strtox_result_e asn_strtoumax_lim(const char *str, const char **end,
  * Convert the integer value into the corresponding enumeration map entry.
  */
 const asn_INTEGER_enum_map_t *INTEGER_map_value2enum(
-    const asn_INTEGER_specifics_t *specs, long value);
+    const asn_INTEGER_specifics_t *specs, int64_t value);
 
 #ifdef __cplusplus
 }

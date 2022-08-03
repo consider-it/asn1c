@@ -71,7 +71,7 @@ int
 Int2_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
 	const Int1_t *st = (const Int1_t *)sptr;
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -145,7 +145,7 @@ int
 Int3_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
 	const Int2_t *st = (const Int2_t *)sptr;
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -223,7 +223,7 @@ int
 Int4_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
 	const Int3_t *st = (const Int3_t *)sptr;
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -301,7 +301,7 @@ int
 Int5_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
 	const Int4_t *st = (const Int4_t *)sptr;
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -379,7 +379,7 @@ int
 ExtensibleExtensions_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
 	const INTEGER_t *st = (const INTEGER_t *)sptr;
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -1934,7 +1934,7 @@ static int
 memb_int1_c_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
 	const Int1_t *st = (const Int1_t *)sptr;
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -1965,7 +1965,7 @@ static int
 memb_int4_c_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
 	const Int4_t *st = (const Int4_t *)sptr;
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -1996,7 +1996,7 @@ static int
 memb_int5_c_constraint_1(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
 	const Int5_t *st = (const Int5_t *)sptr;
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -2034,7 +2034,7 @@ static int asn_DFL_2_cmp_3(const void *sptr) {
 	}
 	
 	/* Test default value 3 */
-	long value;
+	int64_t value;
 	if(asn_INTEGER2long(st, &value))
 		return -1;
 	return (value != 3);
@@ -2364,7 +2364,7 @@ typedef enum Enum1 {
 
 /*** <<< TYPE-DECLS [Enum1] >>> ***/
 
-typedef long	 Enum1_t;
+typedef int64_t	 Enum1_t;
 
 /*** <<< FUNC-DECLS [Enum1] >>> ***/
 
@@ -2382,7 +2382,7 @@ xer_type_encoder_f Enum1_encode_xer;
 int
 Enum1_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
-	long value;
+	int64_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -2391,7 +2391,7 @@ Enum1_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 		return -1;
 	}
 	
-	value = *(const long *)sptr;
+	value = *(const int64_t *)sptr;
 	
 	if((value == 0)) {
 		/* Constraint check succeeded */

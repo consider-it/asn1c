@@ -17,13 +17,13 @@ static int _print2buf(const void *buf, size_t size, void *key) {
 }
 
 static void
-check(uint8_t *buf, size_t size, long check_long, int check_ret) {
+check(uint8_t *buf, size_t size, int64_t check_long, int check_ret) {
 	char scratch[128];
 	char verify[32];
 	INTEGER_t val;
 	uint8_t *buf_end = buf + size;
 	int ret;
-	long rlong = 123;
+	int64_t rlong = 123;
 
 	assert(buf);
 	assert(size > 0);
@@ -39,15 +39,15 @@ check(uint8_t *buf, size_t size, long check_long, int check_ret) {
 	printf("]: ");
 
 	ret = asn_INTEGER2long(&val, &rlong);
-	printf(" (%ld, %d) vs (%ld, %d)\n",
+	printf(" (%"PRIi64", %d) vs (%"PRIi64", %d)\n",
 		rlong, ret, check_long, check_ret);
 	assert(ret == check_ret);
-	printf("%ld %ld\n", rlong, check_long);
+	printf("%"PRIi64" %"PRIi64"\n", rlong, check_long);
 	assert(rlong == check_long);
 
 	if(check_ret == 0) {
 		INTEGER_t val2;
-		long rlong2;
+		int64_t rlong2;
 		val2.buf = 0;
 		val2.size = 0;
 		ret = asn_long2INTEGER(&val2, rlong);
@@ -64,7 +64,7 @@ check(uint8_t *buf, size_t size, long check_long, int check_ret) {
 	ret = INTEGER_print(&asn_DEF_INTEGER, &val, 0, _print2buf, scratch);
 	assert(shared_scratch_start < scratch + sizeof(scratch));
 	assert(ret == 0);
-	ret = snprintf(verify, sizeof(verify), "%ld", check_long);
+	ret = snprintf(verify, sizeof(verify), "%"PRIi64"", check_long);
 	assert(ret < 0 || (size_t)ret < sizeof(verify));
 	ret = strcmp(scratch, verify);
 	printf("         [%s] vs [%s]: %d%s\n",
@@ -79,13 +79,13 @@ check(uint8_t *buf, size_t size, long check_long, int check_ret) {
 }
 
 static void
-check_unsigned(uint8_t *buf, int size, unsigned long check_long, int check_ret) {
+check_unsigned(uint8_t *buf, int size, uint64_t check_long, int check_ret) {
 	char scratch[128];
 	char verify[32];
 	INTEGER_t val;
 	uint8_t *buf_end = buf + size;
 	int ret;
-	unsigned long rlong = 123;
+	uint64_t rlong = 123;
 
 	assert(buf);
 	assert(size >= 0);
@@ -101,14 +101,14 @@ check_unsigned(uint8_t *buf, int size, unsigned long check_long, int check_ret) 
 	printf("]: ");
 
 	ret = asn_INTEGER2ulong(&val, &rlong);
-	printf(" (%lu, %d) vs (%lu, %d)\n",
+	printf(" (%"PRIu64", %d) vs (%"PRIu64", %d)\n",
 		rlong, ret, check_long, check_ret);
 	assert(ret == check_ret);
 	assert(rlong == check_long);
 
 	if(check_ret == 0) {
 		INTEGER_t val2;
-		unsigned long rlong2;
+		uint64_t rlong2;
 		val2.buf = 0;
 		val2.size = 0;
 		ret = asn_ulong2INTEGER(&val2, rlong);
@@ -132,7 +132,7 @@ check_unsigned(uint8_t *buf, int size, unsigned long check_long, int check_ret) 
 	ret = INTEGER_print(&asn_DEF_INTEGER, &val, 0, _print2buf, scratch);
 	assert(shared_scratch_start < scratch + sizeof(scratch));
 	assert(ret == 0);
-	ret = snprintf(verify, sizeof(verify), "%lu", check_long);
+	ret = snprintf(verify, sizeof(verify), "%"PRIu64"", check_long);
 	assert(ret < (int)sizeof(verify));
 	ret = strcmp(scratch, verify);
 	printf("         [%s] vs [%s]: %d%s\n",
@@ -147,13 +147,13 @@ check_unsigned(uint8_t *buf, int size, unsigned long check_long, int check_ret) 
 }
 
 static void
-check_xer(int lineno, int tofail, char *xmldata, long orig_value) {
+check_xer(int lineno, int tofail, char *xmldata, int64_t orig_value) {
 	INTEGER_t *st = 0;
 	asn_dec_rval_t rc;
-	long value;
+	int64_t value;
 	int ret;
 
-	printf("%03d: [%s] vs %ld: ", lineno, xmldata, orig_value);
+	printf("%03d: [%s] vs %"PRIi64": ", lineno, xmldata, orig_value);
 
 	rc = xer_decode(0, &asn_DEF_INTEGER, (void *)&st,
 		xmldata, strlen(xmldata));
@@ -171,7 +171,7 @@ check_xer(int lineno, int tofail, char *xmldata, long orig_value) {
 	ret = asn_INTEGER2long(st, &value);
 	assert(ret == 0);
 
-	printf("\t%ld\n", value);
+	printf("\t%"PRIi64"\n", value);
 
 	assert(value == orig_value);
 
